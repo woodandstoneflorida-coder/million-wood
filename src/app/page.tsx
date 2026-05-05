@@ -25,7 +25,7 @@ export default function Home() {
             <a href="#services" className="hover:text-metallic-gold transition-colors">Services</a>
             <a href="#process" className="hover:text-metallic-gold transition-colors">Process</a>
             <a href="#portfolio" className="hover:text-metallic-gold transition-colors">Portfolio</a>
-            <a href="#philosophy" className="hover:text-metallic-gold transition-colors">Philosophy</a>
+            <a href="#why-us" className="hover:text-metallic-gold transition-colors">Why Us</a>
             <a href="#contact" className="hover:text-metallic-gold transition-colors">Contact</a>
           </nav>
           <a href="#contact" className="md:hidden border border-metallic-gold text-metallic-gold px-4 py-2 text-xs uppercase tracking-widest font-semibold">

@@ -40,7 +40,7 @@ const GoogleIcon = () => (
 
 export default function Testimonials() {
   return (
-    <section id="philosophy" className="py-32 bg-matte-black border-t border-charcoal relative">
+    <section id="why-us" className="py-32 bg-matte-black border-t border-charcoal relative">
       <div className="container mx-auto px-6 max-w-7xl">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
           
