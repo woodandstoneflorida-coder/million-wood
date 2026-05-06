@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Grid, Box, Columns, Layers } from "lucide-react";
 import { useState } from "react";
+import Image from "next/image";
 import GalleryModal from "./GalleryModal";
 import { trackMetaEvent } from "@/lib/metaPixel";
 
@@ -74,10 +75,17 @@ export default function Services() {
                 className="group relative bg-deep-charcoal border border-charcoal p-10 overflow-hidden min-h-[320px] transition-all duration-500 hover:border-metallic-gold/50 cursor-pointer"
               >
                 {/* Background Image that appears on hover */}
-                <div 
-                  className="absolute inset-0 bg-cover bg-center opacity-0 group-hover:opacity-40 transition-all duration-700 scale-105 group-hover:scale-100"
-                  style={{ backgroundImage: `url('${service.image}')` }}
-                />
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-40 transition-all duration-700 scale-105 group-hover:scale-100">
+                  <Image 
+                    src={service.image} 
+                    alt={service.title} 
+                    fill 
+                    className="object-cover" 
+                    loading="lazy" 
+                    quality={75}
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-matte-black via-matte-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                 
                 <div className="relative z-10 flex flex-col h-full justify-between">

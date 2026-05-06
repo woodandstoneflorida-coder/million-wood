@@ -6,6 +6,7 @@ import WhatsAppButton from '@/components/WhatsAppButton';
 import UrgencyBanner from '@/components/UrgencyBanner';
 import ScratchCardPopup from '@/components/ScratchCardPopup';
 import GlobalTracker from '@/components/GlobalTracker';
+import SocialProofPopup from '@/components/SocialProofPopup';
 import "./globals.css";
 
 const outfit = Outfit({
@@ -38,6 +39,7 @@ export default function RootLayout({
         <UrgencyBanner />
         {children}
         <ScratchCardPopup />
+        <SocialProofPopup />
         <WhatsAppButton />
 
         {/* Google Analytics (Tag Manager) */}

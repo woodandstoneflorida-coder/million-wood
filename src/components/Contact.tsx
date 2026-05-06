@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Phone, MapPin, Sparkles } from "lucide-react";
+import { Mail, Phone, MapPin, Sparkles, ShieldCheck, Gem } from "lucide-react";
 import { useState, useEffect } from "react";
 import { trackMetaEvent } from "@/lib/metaPixel";
 
@@ -275,6 +275,21 @@ export default function Contact() {
               >
                 {isSubmitting ? "Sending..." : "Send Message"}
               </button>
+
+              <div className="pt-6 grid grid-cols-3 gap-4 border-t border-charcoal/50">
+                <div className="flex flex-col items-center justify-center text-center gap-2">
+                  <ShieldCheck className="w-5 h-5 text-metallic-gold" />
+                  <span className="text-[10px] uppercase tracking-wider text-gray-400 font-semibold leading-tight">Licensed & Insured</span>
+                </div>
+                <div className="flex flex-col items-center justify-center text-center gap-2">
+                  <Gem className="w-5 h-5 text-metallic-gold" />
+                  <span className="text-[10px] uppercase tracking-wider text-gray-400 font-semibold leading-tight">Premium Materials</span>
+                </div>
+                <div className="flex flex-col items-center justify-center text-center gap-2">
+                  <MapPin className="w-5 h-5 text-metallic-gold" />
+                  <span className="text-[10px] uppercase tracking-wider text-gray-400 font-semibold leading-tight">Crafted in Miami</span>
+                </div>
+              </div>
             </form>
           </motion.div>
 
