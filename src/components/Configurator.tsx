@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Shirt, AlignJustify, ArrowDownToLine, Trash2, Maximize, LayoutTemplate } from "lucide-react";
+import { trackMetaEvent } from "@/lib/metaPixel";
 
 type Material = { id: string; name: string; color: string; border: string; image?: string };
 type ModuleType = "drawers" | "hanger" | "shelves" | null;
@@ -22,9 +23,7 @@ export default function Configurator({ onClose }: { onClose?: () => void }) {
   const trackStart = () => {
     if (!hasTrackedStart) {
       setHasTrackedStart(true);
-      if (typeof window !== "undefined" && (window as any).fbq) {
-        (window as any).fbq('trackCustom', 'ConfiguratorStarted');
-      }
+      trackMetaEvent('ConfiguratorStarted', {}, true);
     }
   };
 
@@ -82,9 +81,7 @@ I would like to get a quote for this exact configuration.`;
     if (contactSection) {
       if (onClose) onClose();
       
-      if (typeof window !== "undefined" && (window as any).fbq) {
-        (window as any).fbq('trackCustom', 'ConfiguratorCompleted');
-      }
+      trackMetaEvent('ConfiguratorCompleted', {}, true);
       
       setTimeout(() => {
         contactSection.scrollIntoView({ behavior: "smooth" });
@@ -231,9 +228,7 @@ I would like to get a quote for this exact configuration.`;
                     key={m.id}
                     onClick={() => {
                       setMaterial(m);
-                      if (typeof window !== "undefined" && (window as any).fbq) {
-                        (window as any).fbq('trackCustom', 'ViewMaterial', { material_name: m.name });
-                      }
+                      trackMetaEvent('ViewMaterial', { material_name: m.name }, true);
                     }}
                     className={`flex flex-col items-center justify-center p-2 border transition-all duration-300 ${
                       material.id === m.id ? "border-metallic-gold bg-charcoal shadow-[0_0_10px_rgba(212,175,55,0.2)]" : "border-gray-800 hover:border-gray-600 bg-matte-black"

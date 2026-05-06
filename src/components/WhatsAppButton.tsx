@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { MessageCircle } from "lucide-react";
+import { trackMetaEvent } from "@/lib/metaPixel";
 
 export default function WhatsAppButton() {
   // Replace this with the actual phone number, including country code (e.g., 1234567890)
@@ -11,9 +12,7 @@ export default function WhatsAppButton() {
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
   const handleClick = () => {
-    if (typeof window !== "undefined" && (window as any).fbq) {
-      (window as any).fbq('track', 'Contact', { method: 'WhatsApp' });
-    }
+    trackMetaEvent('Contact', { method: 'WhatsApp' }, true);
   };
 
   return (

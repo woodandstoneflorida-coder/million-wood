@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { trackMetaEvent } from "@/lib/metaPixel";
 
 // We select a mix of the uploaded images to show in the gallery
 const portfolioItems = [
@@ -45,9 +46,7 @@ export default function Portfolio() {
                 index === 0 ? "md:col-span-2 md:row-span-2" : ""
               } ${index === 3 ? "lg:col-span-2" : ""}`}
               onMouseEnter={() => {
-                if (typeof window !== "undefined" && (window as any).fbq) {
-                  (window as any).fbq('trackCustom', 'ViewPortfolio', { project: item.alt });
-                }
+                trackMetaEvent('ViewPortfolio', { project: item.alt }, true);
               }}
             >
               <div 

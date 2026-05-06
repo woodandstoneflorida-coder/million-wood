@@ -1,19 +1,25 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { trackMetaEvent } from "@/lib/metaPixel";
 
 export default function GlobalTracker() {
   const hasTrackedScroll = useRef(false);
   const hasTrackedTime = useRef(false);
+  const hasTrackedPageView = useRef(false);
 
   useEffect(() => {
+    // 0. Initial PageView (Deduplicated via CAPI)
+    if (!hasTrackedPageView.current) {
+      hasTrackedPageView.current = true;
+      trackMetaEvent('PageView');
+    }
+
     // 1. Time Tracking (60 seconds)
     const timeTimeout = setTimeout(() => {
       if (!hasTrackedTime.current) {
         hasTrackedTime.current = true;
-        if (typeof window !== "undefined" && (window as any).fbq) {
-          (window as any).fbq('trackCustom', 'TimeOnSite_60s');
-        }
+        trackMetaEvent('TimeOnSite_60s', {}, true);
       }
     }, 60000);
 
@@ -27,9 +33,7 @@ export default function GlobalTracker() {
 
       if (depth >= 0.75) {
         hasTrackedScroll.current = true;
-        if (typeof window !== "undefined" && (window as any).fbq) {
-          (window as any).fbq('trackCustom', 'ScrollDepth_75');
-        }
+        trackMetaEvent('ScrollDepth_75', {}, true);
       }
     };
 

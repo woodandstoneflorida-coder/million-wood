@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Mail, Phone, MapPin, Sparkles } from "lucide-react";
 import { useState, useEffect } from "react";
+import { trackMetaEvent } from "@/lib/metaPixel";
 
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -61,9 +62,7 @@ export default function Contact() {
 
       if (data.success) {
         setIsSuccess(true);
-        if (typeof window !== "undefined" && (window as any).fbq) {
-          (window as any).fbq('track', 'Lead', { source: 'ContactForm' });
-        }
+        trackMetaEvent('Lead', { source: 'ContactForm' });
         (e.target as HTMLFormElement).reset();
         setTimeout(() => setIsSuccess(false), 5000); // Hide success message after 5 seconds
       } else {
@@ -144,8 +143,8 @@ export default function Contact() {
               className="space-y-6" 
               onSubmit={handleSubmit}
               onFocus={() => {
-                if (typeof window !== "undefined" && (window as any).fbq && !(window as any)._formStartedTracked) {
-                  (window as any).fbq('trackCustom', 'StartedForm');
+                if (!(window as any)._formStartedTracked) {
+                  trackMetaEvent('StartedForm', {}, true);
                   (window as any)._formStartedTracked = true; // Prevents firing multiple times
                 }
               }}

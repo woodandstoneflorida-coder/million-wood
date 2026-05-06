@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Sparkles } from "lucide-react";
+import { trackMetaEvent } from "@/lib/metaPixel";
 
 export default function ScratchCardPopup() {
   const [isOpen, setIsOpen] = useState(false);
@@ -57,9 +58,7 @@ export default function ScratchCardPopup() {
 
       const triggerPopup = () => {
         setIsOpen(true);
-        if (typeof window !== "undefined" && (window as any).fbq) {
-          (window as any).fbq('trackCustom', 'ExitIntentTriggered');
-        }
+        trackMetaEvent('ExitIntentTriggered', {}, true);
         document.removeEventListener("mouseout", handleMouseOut);
         window.removeEventListener("scroll", handleScroll);
       };
@@ -146,9 +145,7 @@ export default function ScratchCardPopup() {
     const newCode = `MW-${randomChars}`;
     setDiscountCode(newCode);
 
-    if (typeof window !== "undefined" && (window as any).fbq) {
-      (window as any).fbq('trackCustom', 'UnlockedDiscount', { discount_level: discountLevel });
-    }
+    trackMetaEvent('UnlockedDiscount', { discount_level: discountLevel }, true);
 
     const hours = discountLevel === "10" ? 2 : 4;
     const expiresAt = Date.now() + hours * 60 * 60 * 1000;

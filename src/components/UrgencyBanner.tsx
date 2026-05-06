@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { trackMetaEvent } from "@/lib/metaPixel";
 
 export default function UrgencyBanner() {
   const [activeCode, setActiveCode] = useState<string | null>(null);
@@ -20,9 +21,7 @@ export default function UrgencyBanner() {
         calculateTimeLeft(expiresAt);
       } else {
         // Expired
-        if (typeof window !== "undefined" && (window as any).fbq) {
-          (window as any).fbq('trackCustom', 'ExpiredDiscount', { code_lost: code });
-        }
+        trackMetaEvent('ExpiredDiscount', { code_lost: code }, true);
 
         const level = localStorage.getItem("mw_discount_level");
         

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Grid, Box, Columns, Layers } from "lucide-react";
 import { useState } from "react";
 import GalleryModal from "./GalleryModal";
+import { trackMetaEvent } from "@/lib/metaPixel";
 
 const services = [
   {
@@ -68,9 +69,7 @@ export default function Services() {
                 transition={{ delay: index * 0.1, duration: 0.6 }}
                 onClick={() => {
                   setActiveServiceId(service.id);
-                  if (typeof window !== "undefined" && (window as any).fbq) {
-                    (window as any).fbq('trackCustom', 'ViewService', { service_name: service.title });
-                  }
+                  trackMetaEvent('ViewService', { service_name: service.title }, true);
                 }}
                 className="group relative bg-deep-charcoal border border-charcoal p-10 overflow-hidden min-h-[320px] transition-all duration-500 hover:border-metallic-gold/50 cursor-pointer"
               >
