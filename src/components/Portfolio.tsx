@@ -44,6 +44,11 @@ export default function Portfolio() {
               className={`relative group overflow-hidden bg-matte-black ${
                 index === 0 ? "md:col-span-2 md:row-span-2" : ""
               } ${index === 3 ? "lg:col-span-2" : ""}`}
+              onMouseEnter={() => {
+                if (typeof window !== "undefined" && (window as any).fbq) {
+                  (window as any).fbq('trackCustom', 'ViewPortfolio', { project: item.alt });
+                }
+              }}
             >
               <div 
                 className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-100"

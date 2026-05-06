@@ -17,6 +17,16 @@ export default function Configurator({ onClose }: { onClose?: () => void }) {
   const [layoutType, setLayoutType] = useState<string>("Single Wall");
   const [width, setWidth] = useState<number>(120);
   const [height, setHeight] = useState<number>(96);
+  const [hasTrackedStart, setHasTrackedStart] = useState(false);
+
+  const trackStart = () => {
+    if (!hasTrackedStart) {
+      setHasTrackedStart(true);
+      if (typeof window !== "undefined" && (window as any).fbq) {
+        (window as any).fbq('trackCustom', 'ConfiguratorStarted');
+      }
+    }
+  };
 
   const [sections, setSections] = useState<Record<string, ModuleType>>({
     "left-top": null, "left-mid": null, "left-bottom": null,
@@ -26,6 +36,7 @@ export default function Configurator({ onClose }: { onClose?: () => void }) {
 
   const handleSetModule = (sectionKey: string, mod: ModuleType) => {
     setSections((prev) => ({ ...prev, [sectionKey]: mod }));
+    trackStart();
   };
 
   const handleQuoteClick = () => {
@@ -70,6 +81,11 @@ I would like to get a quote for this exact configuration.`;
     const contactSection = document.getElementById("contact");
     if (contactSection) {
       if (onClose) onClose();
+      
+      if (typeof window !== "undefined" && (window as any).fbq) {
+        (window as any).fbq('trackCustom', 'ConfiguratorCompleted');
+      }
+      
       setTimeout(() => {
         contactSection.scrollIntoView({ behavior: "smooth" });
       }, 100);
@@ -177,7 +193,10 @@ I would like to get a quote for this exact configuration.`;
               </h3>
               <select 
                 value={layoutType} 
-                onChange={(e) => setLayoutType(e.target.value)}
+                onChange={(e) => {
+                  setLayoutType(e.target.value);
+                  trackStart();
+                }}
                 className="w-full bg-charcoal border border-gray-700 text-white px-3 py-2 text-sm focus:border-metallic-gold outline-none transition-colors"
               >
                 <option value="Single Wall">Single Wall (Linear)</option>
@@ -194,11 +213,11 @@ I would like to get a quote for this exact configuration.`;
               <div className="space-y-4">
                 <div>
                   <label className="text-xs text-gray-400 uppercase tracking-wider mb-1 block">Total Width (inches)</label>
-                  <input type="number" value={width} onChange={(e) => setWidth(Number(e.target.value))} className="w-full bg-charcoal border border-gray-700 text-white px-3 py-2 text-sm focus:border-metallic-gold outline-none transition-colors" />
+                  <input type="number" value={width} onChange={(e) => { setWidth(Number(e.target.value)); trackStart(); }} className="w-full bg-charcoal border border-gray-700 text-white px-3 py-2 text-sm focus:border-metallic-gold outline-none transition-colors" />
                 </div>
                 <div>
                   <label className="text-xs text-gray-400 uppercase tracking-wider mb-1 block">Total Height (inches)</label>
-                  <input type="number" value={height} onChange={(e) => setHeight(Number(e.target.value))} className="w-full bg-charcoal border border-gray-700 text-white px-3 py-2 text-sm focus:border-metallic-gold outline-none transition-colors" />
+                  <input type="number" value={height} onChange={(e) => { setHeight(Number(e.target.value)); trackStart(); }} className="w-full bg-charcoal border border-gray-700 text-white px-3 py-2 text-sm focus:border-metallic-gold outline-none transition-colors" />
                 </div>
               </div>
             </div>
@@ -210,7 +229,12 @@ I would like to get a quote for this exact configuration.`;
                 {materials.map((m) => (
                   <button
                     key={m.id}
-                    onClick={() => setMaterial(m)}
+                    onClick={() => {
+                      setMaterial(m);
+                      if (typeof window !== "undefined" && (window as any).fbq) {
+                        (window as any).fbq('trackCustom', 'ViewMaterial', { material_name: m.name });
+                      }
+                    }}
                     className={`flex flex-col items-center justify-center p-2 border transition-all duration-300 ${
                       material.id === m.id ? "border-metallic-gold bg-charcoal shadow-[0_0_10px_rgba(212,175,55,0.2)]" : "border-gray-800 hover:border-gray-600 bg-matte-black"
                     }`}

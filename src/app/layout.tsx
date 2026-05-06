@@ -5,6 +5,7 @@ import Script from 'next/script';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import UrgencyBanner from '@/components/UrgencyBanner';
 import ScratchCardPopup from '@/components/ScratchCardPopup';
+import GlobalTracker from '@/components/GlobalTracker';
 import "./globals.css";
 
 const outfit = Outfit({
@@ -33,6 +34,7 @@ export default function RootLayout({
       className={`${outfit.variable} ${geistMono.variable} h-full antialiased dark`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground overflow-x-hidden">
+        <GlobalTracker />
         <UrgencyBanner />
         {children}
         <ScratchCardPopup />

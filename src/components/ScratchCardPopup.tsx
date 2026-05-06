@@ -57,6 +57,9 @@ export default function ScratchCardPopup() {
 
       const triggerPopup = () => {
         setIsOpen(true);
+        if (typeof window !== "undefined" && (window as any).fbq) {
+          (window as any).fbq('trackCustom', 'ExitIntentTriggered');
+        }
         document.removeEventListener("mouseout", handleMouseOut);
         window.removeEventListener("scroll", handleScroll);
       };
