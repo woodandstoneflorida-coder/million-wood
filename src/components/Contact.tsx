@@ -61,6 +61,9 @@ export default function Contact() {
 
       if (data.success) {
         setIsSuccess(true);
+        if (typeof window !== "undefined" && (window as any).fbq) {
+          (window as any).fbq('track', 'Lead', { source: 'ContactForm' });
+        }
         (e.target as HTMLFormElement).reset();
         setTimeout(() => setIsSuccess(false), 5000); // Hide success message after 5 seconds
       } else {
@@ -137,7 +140,16 @@ export default function Contact() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="bg-deep-charcoal p-8 md:p-12 border border-charcoal"
           >
-            <form className="space-y-6" onSubmit={handleSubmit}>
+            <form 
+              className="space-y-6" 
+              onSubmit={handleSubmit}
+              onFocus={() => {
+                if (typeof window !== "undefined" && (window as any).fbq && !(window as any)._formStartedTracked) {
+                  (window as any).fbq('trackCustom', 'StartedForm');
+                  (window as any)._formStartedTracked = true; // Prevents firing multiple times
+                }
+              }}
+            >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label htmlFor="name" className="text-xs uppercase tracking-widest text-gray-500 font-semibold">Name</label>

@@ -66,7 +66,12 @@ export default function Services() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.6 }}
-                onClick={() => setActiveServiceId(service.id)}
+                onClick={() => {
+                  setActiveServiceId(service.id);
+                  if (typeof window !== "undefined" && (window as any).fbq) {
+                    (window as any).fbq('trackCustom', 'ViewService', { service_name: service.title });
+                  }
+                }}
                 className="group relative bg-deep-charcoal border border-charcoal p-10 overflow-hidden min-h-[320px] transition-all duration-500 hover:border-metallic-gold/50 cursor-pointer"
               >
                 {/* Background Image that appears on hover */}

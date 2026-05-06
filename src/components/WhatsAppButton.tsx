@@ -10,11 +10,18 @@ export default function WhatsAppButton() {
   
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
+  const handleClick = () => {
+    if (typeof window !== "undefined" && (window as any).fbq) {
+      (window as any).fbq('track', 'Contact', { method: 'WhatsApp' });
+    }
+  };
+
   return (
     <motion.a
       href={whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={handleClick}
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ delay: 1.5, type: "spring", stiffness: 200, damping: 20 }}
