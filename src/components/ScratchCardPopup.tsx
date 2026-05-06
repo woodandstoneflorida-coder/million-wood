@@ -143,6 +143,10 @@ export default function ScratchCardPopup() {
     const newCode = `MW-${randomChars}`;
     setDiscountCode(newCode);
 
+    if (typeof window !== "undefined" && (window as any).fbq) {
+      (window as any).fbq('trackCustom', 'UnlockedDiscount', { discount_level: discountLevel });
+    }
+
     const hours = discountLevel === "10" ? 2 : 4;
     const expiresAt = Date.now() + hours * 60 * 60 * 1000;
     

@@ -20,6 +20,10 @@ export default function UrgencyBanner() {
         calculateTimeLeft(expiresAt);
       } else {
         // Expired
+        if (typeof window !== "undefined" && (window as any).fbq) {
+          (window as any).fbq('trackCustom', 'ExpiredDiscount', { code_lost: code });
+        }
+
         const level = localStorage.getItem("mw_discount_level");
         
         if (level === "10") {
