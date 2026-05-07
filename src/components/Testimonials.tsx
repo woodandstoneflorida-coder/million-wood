@@ -1,8 +1,9 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Quote, Star } from "lucide-react";
+import { Quote, Star, Plus } from "lucide-react";
 import { useState, useEffect } from "react";
+import ReviewModal from "./ReviewModal";
 
 const testimonialsPool = [
   {
@@ -125,6 +126,7 @@ const GoogleIcon = () => (
 export default function Testimonials() {
   const scrollContainerRef = typeof window !== 'undefined' ? require('react').useRef<HTMLDivElement>(null) : null;
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
   useEffect(() => {
     if (!isAutoPlaying || !scrollContainerRef) return;
@@ -192,15 +194,24 @@ export default function Testimonials() {
 
           {/* Google-Style Testimonials Carousel */}
           <div className="lg:w-2/3 w-full">
-            <div className="flex items-center gap-3 mb-8">
-              <GoogleIcon />
-              <span className="text-white font-medium">Google Reviews</span>
-              <div className="flex gap-1 ml-2">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-[#FBBC05] text-[#FBBC05]" />
-                ))}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+              <div className="flex items-center gap-3">
+                <GoogleIcon />
+                <span className="text-white font-medium">Google Reviews</span>
+                <div className="flex gap-1 ml-2">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-[#FBBC05] text-[#FBBC05]" />
+                  ))}
+                </div>
+                <span className="text-gray-400 text-sm ml-1">5.0</span>
               </div>
-              <span className="text-gray-400 text-sm ml-1">5.0</span>
+              <button 
+                onClick={() => setIsReviewModalOpen(true)}
+                className="flex items-center gap-2 text-xs uppercase tracking-widest font-semibold text-metallic-gold border border-metallic-gold/30 hover:border-metallic-gold px-4 py-2 transition-colors self-start sm:self-auto"
+              >
+                <Plus className="w-3 h-3" />
+                Leave a Review
+              </button>
             </div>
 
             <div className="relative">
@@ -267,6 +278,11 @@ export default function Testimonials() {
 
         </div>
       </div>
+      
+      <ReviewModal 
+        isOpen={isReviewModalOpen} 
+        onClose={() => setIsReviewModalOpen(false)} 
+      />
     </section>
   );
 }
