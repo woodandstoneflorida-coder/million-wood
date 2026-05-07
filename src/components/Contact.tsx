@@ -98,36 +98,36 @@ export default function Contact() {
             </div>
 
             <div className="space-y-6">
-              <div className="flex items-center gap-4 group">
+              <a href="tel:+17542673047" className="flex items-center gap-4 group cursor-pointer hover:opacity-80 transition-opacity">
                 <div className="w-12 h-12 flex items-center justify-center bg-deep-charcoal border border-charcoal group-hover:border-metallic-gold transition-colors duration-300">
                   <Phone className="w-5 h-5 text-metallic-gold" />
                 </div>
                 <div>
                   <p className="text-sm text-gray-500 uppercase tracking-wider mb-1">Phone</p>
-                  <p className="text-white font-medium">+1 (754) 267-3047</p>
+                  <p className="text-white font-medium group-hover:text-metallic-gold transition-colors">+1 (754) 267-3047</p>
                 </div>
-              </div>
+              </a>
               
-              <div className="flex items-center gap-4 group">
+              <a href="mailto:millionwoodusa@gmail.com" className="flex items-center gap-4 group cursor-pointer hover:opacity-80 transition-opacity">
                 <div className="w-12 h-12 flex items-center justify-center bg-deep-charcoal border border-charcoal group-hover:border-metallic-gold transition-colors duration-300">
                   <Mail className="w-5 h-5 text-metallic-gold" />
                 </div>
                 <div>
                   <p className="text-sm text-gray-500 uppercase tracking-wider mb-1">Email</p>
-                  <p className="text-white font-medium">millionwoodusa@gmail.com</p>
+                  <p className="text-white font-medium group-hover:text-metallic-gold transition-colors">millionwoodusa@gmail.com</p>
                 </div>
-              </div>
+              </a>
 
-              <div className="flex items-center gap-4 group">
+              <a href="https://maps.google.com/?q=7321+NW+61ST+STREET+MIAMI+FL+33166" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group cursor-pointer hover:opacity-80 transition-opacity">
                 <div className="w-12 h-12 flex items-center justify-center bg-deep-charcoal border border-charcoal group-hover:border-metallic-gold transition-colors duration-300">
                   <MapPin className="w-5 h-5 text-metallic-gold" />
                 </div>
                 <div>
                   <p className="text-sm text-gray-500 uppercase tracking-wider mb-1">Studio & Shop</p>
-                  <p className="text-white font-medium">7321 NW 61ST STREET MIAMI FL 33166</p>
+                  <p className="text-white font-medium group-hover:text-metallic-gold transition-colors">7321 NW 61ST STREET MIAMI FL 33166</p>
                   <p className="text-xs text-metallic-gold mt-1 uppercase tracking-widest font-semibold">* Solamente con cita previa / By appointment only</p>
                 </div>
-              </div>
+              </a>
             </div>
           </motion.div>
 
