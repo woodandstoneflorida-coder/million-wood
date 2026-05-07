@@ -5,6 +5,7 @@ import Portfolio from "@/components/Portfolio";
 import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
 import Image from "next/image";
+import { Facebook, Instagram } from "lucide-react";
 
 export default function Home() {
   return (
@@ -53,9 +54,21 @@ export default function Home() {
           />
           <div className="flex flex-col md:flex-row justify-between w-full max-w-4xl items-center gap-4">
             <p>&copy; {new Date().getFullYear()} Million Wood. All rights reserved.</p>
-            <div className="flex gap-4">
-              <a href="#" className="hover:text-metallic-gold transition-colors">Instagram</a>
-              <a href="#" className="hover:text-metallic-gold transition-colors">LinkedIn</a>
+            <div className="flex flex-col sm:flex-row gap-6 md:gap-8 items-center mt-4 md:mt-0">
+              <a href="https://www.facebook.com/MillionWoodUSA" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-metallic-gold transition-colors group">
+                <Facebook className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                <span className="font-medium tracking-wide">/MillionWoodUSA</span>
+              </a>
+              <a href="https://www.instagram.com/millionwoodusa" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-metallic-gold transition-colors group">
+                <Instagram className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                <span className="font-medium tracking-wide">/millionwoodusa</span>
+              </a>
+              <a href="https://www.tiktok.com/@millionwoodmia" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-metallic-gold transition-colors group">
+                <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 group-hover:scale-110 transition-transform">
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                </svg>
+                <span className="font-medium tracking-wide">@millionwoodmia</span>
+              </a>
             </div>
           </div>
         </div>
