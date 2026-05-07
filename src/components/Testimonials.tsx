@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 
 const testimonialsPool = [
   {
-    text: "The attention to detail on our kitchen cabinets was outstanding. They really understood our vision and the 3D process made it so easy to visualize before production. Highly recommend Million Wood.",
+    text: "The atention to detail on our kitchen cabinets was outstanding. They really understood our vision and the 3D process made it so easy to visualize before production. Highly recommend Million Wood.",
     author: "Carlos M.",
     role: "Local Guide · 12 reviews",
     rating: 5,
@@ -20,7 +20,7 @@ const testimonialsPool = [
     date: "1 month ago"
   },
   {
-    text: "Incredible craftsmanship. We hired them for custom wall panels in our Miami office and the result is stunning. They delivered exactly on time and the installation was spotless.",
+    text: "Incredible craftsmanship. We hired them for custom wall panels in our Miami office and the result is stunning. They delivered exactly on time and the instalation was spotless.",
     author: "Daniela V.",
     role: "1 review",
     rating: 5,
@@ -41,11 +41,74 @@ const testimonialsPool = [
     date: "1 week ago"
   },
   {
-    text: "Contraté a Million Wood para hacer un mueble de TV paramétrico. El nivel de detalle que lograron con la máquina CNC es increíble. Superaron mis expectativas por completo.",
+    text: "Contraté a Million Wood para hacer un mueble de TV paramétrico. El nivel de detalle que lograron con la máquina CNC es increible. Superaron mis expectativas por completo.",
     author: "Luis G.",
     role: "Local Guide · 8 reviews",
     rating: 5,
     date: "2 months ago"
+  },
+  {
+    text: "excellent service from start to finish! the wood quality they use (lioher) is simply the best in the market. my walk in closet looks like a boutique store now.",
+    author: "Jennifer P.",
+    role: "3 reviews",
+    rating: 5,
+    date: "4 days ago"
+  },
+  {
+    text: "Muy contento con el trabajo. Hubo un detalle con una bisagra que no cerraba bien suave, pero los llamé y al dia siguiente mandaron a alguien a ajustarlo sin cobrar nada extra. Eso vale oro.",
+    author: "Andres T.",
+    role: "Local Guide · 21 reviews",
+    rating: 4,
+    date: "2 months ago"
+  },
+  {
+    text: "We quoted our kitchen remodel with 4 different companies in Doral and million wood wasn't the cheapest, but they were the only ones who showed us a proper 3d rendering. Totaly worth the investment.",
+    author: "Michael & Lisa",
+    role: "1 review",
+    rating: 5,
+    date: "5 months ago"
+  },
+  {
+    text: "me encantó el diseño de los paneles de madera para mi sala. Katherine fue súper amable guiándome con los colores que combinaban mejor con mi piso.",
+    author: "Sofia L.",
+    role: "6 reviews",
+    rating: 5,
+    date: "1 month ago"
+  },
+  {
+    text: "Fast turnaround on a CNC cutting job we needed for a commercial project. Dimensions were exact down to the millimeter. Will use them again.",
+    author: "David H.",
+    role: "Local Guide · 45 reviews",
+    rating: 5,
+    date: "2 weeks ago"
+  },
+  {
+    text: "El mejor taller de carpinteria en Miami lejos. Super limpios para trabajar, dejaron mi casa inmaculada despues de instalar la cocina. 10/10",
+    author: "Jose R.",
+    role: "2 reviews",
+    rating: 5,
+    date: "3 months ago"
+  },
+  {
+    text: "I was a bit skeptical because they are a smaller shop, but Julian really knows his craft. The custom vanity they built for our master bath is gorgeous. Only gave 4 stars because the installation took 1 day longer than expected, but the quality made up for it.",
+    author: "Elena C.",
+    role: "9 reviews",
+    rating: 4,
+    date: "4 months ago"
+  },
+  {
+    text: "super recomendados! mi cocina quedo espectacular y el material anti huellas que me recomendo julian fue la mejor decision para mi casa con niños.",
+    author: "Mariana B.",
+    role: "Local Guide · 15 reviews",
+    rating: 5,
+    date: "2 weeks ago"
+  },
+  {
+    text: "They cut some custom architectural shapes for an event activation. Precise, fast, and good comunication.",
+    author: "Thomas W.",
+    role: "1 review",
+    rating: 5,
+    date: "1 month ago"
   }
 ];
 
