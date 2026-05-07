@@ -12,7 +12,17 @@ export default function GlobalTracker() {
     // 0. Initial PageView (Deduplicated via CAPI)
     if (!hasTrackedPageView.current) {
       hasTrackedPageView.current = true;
-      trackMetaEvent('PageView');
+      
+      // Esperar a que el script de Facebook (cargado de forma asíncrona) esté listo
+      const checkFbq = setInterval(() => {
+        if (typeof window !== 'undefined' && (window as any).fbq) {
+          trackMetaEvent('PageView');
+          clearInterval(checkFbq);
+        }
+      }, 500);
+
+      // Limpieza de seguridad por si el script falla en cargar
+      setTimeout(() => clearInterval(checkFbq), 10000);
     }
 
     // 1. Time Tracking (60 seconds)
