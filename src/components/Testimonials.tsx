@@ -207,7 +207,7 @@ export default function Testimonials() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="space-y-8 sticky top-32"
+            className="space-y-8 lg:sticky lg:top-32"
           >
             <div>
               <h2 className="text-sm uppercase tracking-widest text-metallic-gold font-semibold mb-4">
@@ -268,7 +268,7 @@ export default function Testimonials() {
 
               <div 
                 ref={scrollContainerRef}
-                className={`flex flex-col gap-6 overflow-y-auto max-h-[700px] pb-16 ${isDragging ? 'cursor-grabbing snap-none' : 'cursor-grab snap-y snap-mandatory'}`}
+                className={`flex flex-col gap-6 overflow-y-auto max-h-[400px] lg:max-h-[600px] pb-16 ${isDragging ? 'cursor-grabbing snap-none' : 'cursor-grab snap-y snap-mandatory'} overscroll-contain`}
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 onMouseEnter={() => setIsAutoPlaying(false)}
                 onMouseLeave={handleMouseLeave}
