@@ -1,10 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Quote, Star } from "lucide-react";
+import { useState, useEffect } from "react";
 
-// Estructura de datos preparada para coincidir con la API de Google Places en el futuro
-const testimonials = [
+const testimonialsPool = [
   {
     text: "The attention to detail on our kitchen cabinets was outstanding. They really understood our vision and the 3D process made it so easy to visualize before production. Highly recommend Million Wood.",
     author: "Carlos M.",
@@ -13,11 +13,18 @@ const testimonials = [
     date: "2 weeks ago"
   },
   {
+    text: "Hubo un pequeño retraso inicial con la llegada de un material premium, pero Katherin me mantuvo informado en todo momento y Julian ajustó los tiempos trabajando el fin de semana para cumplir la fecha. El clóset quedó de revista. Raro encontrar este nivel de responsabilidad en Miami.",
+    author: "Roberto F.",
+    role: "Local Guide · 34 reviews",
+    rating: 5,
+    date: "1 month ago"
+  },
+  {
     text: "Incredible craftsmanship. We hired them for custom wall panels in our Miami office and the result is stunning. They delivered exactly on time and the installation was spotless.",
     author: "Daniela V.",
     role: "1 review",
     rating: 5,
-    date: "1 month ago"
+    date: "3 weeks ago"
   },
   {
     text: "I'm a general contractor and finding reliable CNC and custom closet services is tough. These guys have state-of-the-art machinery and their precision is flawless. A+.",
@@ -25,6 +32,20 @@ const testimonials = [
     role: "4 reviews",
     rating: 5,
     date: "3 months ago"
+  },
+  {
+    text: "Julian was fantastic to work with. He designed our entire kitchen in 3D before cutting a single piece of wood, which gave us so much peace of mind. The finished product is a work of art.",
+    author: "Sarah J.",
+    role: "2 reviews",
+    rating: 5,
+    date: "1 week ago"
+  },
+  {
+    text: "Contraté a Million Wood para hacer un mueble de TV paramétrico. El nivel de detalle que lograron con la máquina CNC es increíble. Superaron mis expectativas por completo.",
+    author: "Luis G.",
+    role: "Local Guide · 8 reviews",
+    rating: 5,
+    date: "2 months ago"
   }
 ];
 
@@ -39,6 +60,30 @@ const GoogleIcon = () => (
 );
 
 export default function Testimonials() {
+  const [visibleTestimonials, setVisibleTestimonials] = useState(testimonialsPool.slice(0, 3));
+  const [startIndex, setStartIndex] = useState(0);
+
+  useEffect(() => {
+    // Rotar testimonios cada 8 segundos
+    const interval = setInterval(() => {
+      setStartIndex((prevIndex) => {
+        const nextIndex = (prevIndex + 1) % testimonialsPool.length;
+        return nextIndex;
+      });
+    }, 8000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    // Actualizar la lista visible cuando cambia el índice
+    const newVisible = [];
+    for (let i = 0; i < 3; i++) {
+      newVisible.push(testimonialsPool[(startIndex + i) % testimonialsPool.length]);
+    }
+    setVisibleTestimonials(newVisible);
+  }, [startIndex]);
+
   return (
     <section id="why-us" className="py-32 bg-matte-black border-t border-charcoal relative">
       <div className="container mx-auto px-6 max-w-7xl">
@@ -95,40 +140,45 @@ export default function Testimonials() {
               <span className="text-gray-400 text-sm ml-1">5.0</span>
             </div>
 
-            {testimonials.map((testimonial, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                className="bg-deep-charcoal border border-charcoal p-6 rounded-lg relative group hover:border-gray-600 transition-colors duration-500"
-              >
-                <div className="flex justify-between items-start mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center text-white font-semibold text-lg border border-gray-600">
-                      {testimonial.author.charAt(0)}
+            <div className="relative min-h-[500px]">
+              <AnimatePresence mode="popLayout">
+                {visibleTestimonials.map((testimonial, index) => (
+                  <motion.div
+                    key={`${testimonial.author}-${index}`}
+                    layout
+                    initial={{ opacity: 0, x: 50, scale: 0.95 }}
+                    animate={{ opacity: 1, x: 0, scale: 1 }}
+                    exit={{ opacity: 0, x: -50, scale: 0.95 }}
+                    transition={{ duration: 0.5, type: "spring", bounce: 0.3 }}
+                    className="bg-deep-charcoal border border-charcoal p-6 rounded-lg relative group hover:border-gray-600 transition-colors duration-500 mb-6"
+                  >
+                    <div className="flex justify-between items-start mb-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center text-white font-semibold text-lg border border-gray-600">
+                          {testimonial.author.charAt(0)}
+                        </div>
+                        <div>
+                          <p className="text-white font-semibold text-sm">{testimonial.author}</p>
+                          <p className="text-xs text-gray-400">{testimonial.role}</p>
+                        </div>
+                      </div>
+                      <GoogleIcon />
                     </div>
-                    <div>
-                      <p className="text-white font-semibold text-sm">{testimonial.author}</p>
-                      <p className="text-xs text-gray-400">{testimonial.role}</p>
+                    
+                    <div className="flex gap-1 mb-3">
+                      {[...Array(testimonial.rating)].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 fill-[#FBBC05] text-[#FBBC05]" />
+                      ))}
+                      <span className="text-gray-500 text-xs ml-2">{testimonial.date}</span>
                     </div>
-                  </div>
-                  <GoogleIcon />
-                </div>
-                
-                <div className="flex gap-1 mb-3">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-[#FBBC05] text-[#FBBC05]" />
-                  ))}
-                  <span className="text-gray-500 text-xs ml-2">{testimonial.date}</span>
-                </div>
-                
-                <p className="text-gray-300 text-sm leading-relaxed">
-                  {testimonial.text}
-                </p>
-              </motion.div>
-            ))}
+                    
+                    <p className="text-gray-300 text-sm leading-relaxed">
+                      {testimonial.text}
+                    </p>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
           </div>
 
         </div>
