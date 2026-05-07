@@ -20,8 +20,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://millionwoodusa.com"),
   title: "Million Wood | High-End Carpentry & CNC Fabrication",
   description: "Million Wood provides luxury carpentry, custom cabinets, and precision CNC fabrication services, merging 3D design with master craftsmanship.",
+  openGraph: {
+    title: "Million Wood | High-End Carpentry & CNC Fabrication",
+    description: "Million Wood provides luxury carpentry, custom cabinets, and precision CNC fabrication services, merging 3D design with master craftsmanship.",
+    url: "https://millionwoodusa.com",
+    siteName: "Million Wood",
+    locale: "en_US",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
