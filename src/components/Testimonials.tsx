@@ -1,8 +1,8 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Quote, Star, Plus } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Quote, Star, Plus, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
 import ReviewModal from "./ReviewModal";
 
 const testimonialsPool = [
@@ -124,12 +124,15 @@ const GoogleIcon = () => (
 );
 
 export default function Testimonials() {
-  const scrollContainerRef = typeof window !== 'undefined' ? require('react').useRef<HTMLDivElement>(null) : null;
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
 
   useEffect(() => {
-    if (!isAutoPlaying || !scrollContainerRef) return;
+    if (!isAutoPlaying) return;
 
     const interval = setInterval(() => {
       if (scrollContainerRef.current) {
@@ -147,7 +150,48 @@ export default function Testimonials() {
     }, 6000); // 6 seconds per slide
 
     return () => clearInterval(interval);
-  }, [isAutoPlaying, scrollContainerRef]);
+  }, [isAutoPlaying]);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    setIsAutoPlaying(false);
+    if (scrollContainerRef.current) {
+      setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
+      setScrollLeft(scrollContainerRef.current.scrollLeft);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+    setIsAutoPlaying(true);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+    setIsAutoPlaying(true);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !scrollContainerRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollContainerRef.current.offsetLeft;
+    const walk = (x - startX) * 2; // Scroll-fast
+    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
+  };
+  
+  const scroll = (direction: 'left' | 'right') => {
+    setIsAutoPlaying(false);
+    if (scrollContainerRef.current) {
+      const { clientWidth } = scrollContainerRef.current;
+      const cardWidth = clientWidth >= 1024 ? clientWidth / 2 : clientWidth;
+      scrollContainerRef.current.scrollBy({ 
+        left: direction === 'left' ? -cardWidth : cardWidth, 
+        behavior: 'smooth' 
+      });
+      // Resume autoplay after 10s of clicking
+      setTimeout(() => setIsAutoPlaying(true), 10000);
+    }
+  };
 
   return (
     <section id="why-us" className="py-32 bg-matte-black border-t border-charcoal relative overflow-hidden">
@@ -214,18 +258,35 @@ export default function Testimonials() {
               </button>
             </div>
 
-            <div className="relative">
+            <div className="relative group">
               {/* Fade edges */}
               <div className="absolute top-0 bottom-0 left-0 w-8 bg-gradient-to-r from-matte-black to-transparent z-10 pointer-events-none hidden md:block"></div>
               <div className="absolute top-0 bottom-0 right-0 w-8 bg-gradient-to-l from-matte-black to-transparent z-10 pointer-events-none hidden md:block"></div>
 
+              {/* Navigation Arrows */}
+              <button 
+                onClick={() => scroll('left')}
+                className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-black/80 border border-charcoal rounded-full flex items-center justify-center text-white hover:border-metallic-gold transition-colors opacity-0 group-hover:opacity-100 disabled:opacity-0"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button 
+                onClick={() => scroll('right')}
+                className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-black/80 border border-charcoal rounded-full flex items-center justify-center text-white hover:border-metallic-gold transition-colors opacity-0 group-hover:opacity-100 disabled:opacity-0"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+
               <div 
                 ref={scrollContainerRef}
-                className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-8 cursor-grab active:cursor-grabbing"
+                className={`flex gap-6 overflow-x-auto pb-8 ${isDragging ? 'cursor-grabbing snap-none' : 'cursor-grab snap-x snap-mandatory'}`}
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 onMouseEnter={() => setIsAutoPlaying(false)}
-                onMouseLeave={() => setIsAutoPlaying(true)}
+                onMouseLeave={handleMouseLeave}
                 onTouchStart={() => setIsAutoPlaying(false)}
+                onMouseDown={handleMouseDown}
+                onMouseUp={handleMouseUp}
+                onMouseMove={handleMouseMove}
               >
                 {/* CSS to hide scrollbar for webkit */}
                 <style dangerouslySetInnerHTML={{__html: `
