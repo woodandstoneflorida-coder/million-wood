@@ -123,34 +123,34 @@ const GoogleIcon = () => (
 );
 
 export default function Testimonials() {
-  const [visibleTestimonials, setVisibleTestimonials] = useState(testimonialsPool.slice(0, 3));
-  const [startIndex, setStartIndex] = useState(0);
+  const scrollContainerRef = typeof window !== 'undefined' ? require('react').useRef<HTMLDivElement>(null) : null;
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
   useEffect(() => {
-    // Rotar testimonios cada 8 segundos
+    if (!isAutoPlaying || !scrollContainerRef) return;
+
     const interval = setInterval(() => {
-      setStartIndex((prevIndex) => {
-        const nextIndex = (prevIndex + 1) % testimonialsPool.length;
-        return nextIndex;
-      });
-    }, 8000);
+      if (scrollContainerRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+        
+        // If reached the end, go back to start
+        if (scrollLeft + clientWidth >= scrollWidth - 10) {
+          scrollContainerRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          // Scroll by one card width approximately
+          const cardWidth = clientWidth >= 1024 ? clientWidth / 2 : clientWidth; // Show 2 on Desktop, 1 on Mobile
+          scrollContainerRef.current.scrollBy({ left: cardWidth, behavior: 'smooth' });
+        }
+      }
+    }, 6000); // 6 seconds per slide
 
     return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    // Actualizar la lista visible cuando cambia el índice
-    const newVisible = [];
-    for (let i = 0; i < 3; i++) {
-      newVisible.push(testimonialsPool[(startIndex + i) % testimonialsPool.length]);
-    }
-    setVisibleTestimonials(newVisible);
-  }, [startIndex]);
+  }, [isAutoPlaying, scrollContainerRef]);
 
   return (
-    <section id="why-us" className="py-32 bg-matte-black border-t border-charcoal relative">
+    <section id="why-us" className="py-32 bg-matte-black border-t border-charcoal relative overflow-hidden">
       <div className="container mx-auto px-6 max-w-7xl">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+        <div className="flex flex-col lg:flex-row gap-16 items-start">
           
           {/* Philosophy / About Block */}
           <motion.div 
@@ -158,7 +158,7 @@ export default function Testimonials() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="space-y-8"
+            className="space-y-8 lg:w-1/3 shrink-0"
           >
             <div>
               <h2 className="text-sm uppercase tracking-widest text-metallic-gold font-semibold mb-4">
@@ -174,7 +174,7 @@ export default function Testimonials() {
               At Million Wood, we believe that true luxury lies in absolute precision. We are not just carpenters; we are digital craftsmen. 
             </p>
             <p className="text-gray-400 text-lg leading-relaxed font-light">
-              By blending generations of traditional woodworking mastery with the world's most advanced CNC technology and parametric design software, we create architectural elements that were previously thought impossible. Every cut, every joint, and every finish is a testament to our relentless pursuit of perfection.
+              By blending generations of traditional woodworking mastery with the world's most advanced CNC technology and parametric design software, we create architectural elements that were previously thought impossible.
             </p>
             
             <div className="pt-6 border-t border-charcoal flex items-center gap-6">
@@ -190,8 +190,8 @@ export default function Testimonials() {
             </div>
           </motion.div>
 
-          {/* Google-Style Testimonials Block */}
-          <div className="space-y-6">
+          {/* Google-Style Testimonials Carousel */}
+          <div className="lg:w-2/3 w-full">
             <div className="flex items-center gap-3 mb-8">
               <GoogleIcon />
               <span className="text-white font-medium">Google Reviews</span>
@@ -203,44 +203,65 @@ export default function Testimonials() {
               <span className="text-gray-400 text-sm ml-1">5.0</span>
             </div>
 
-            <div className="relative min-h-[500px]">
-              <AnimatePresence mode="popLayout">
-                {visibleTestimonials.map((testimonial, index) => (
-                  <motion.div
-                    key={`${testimonial.author}-${index}`}
-                    layout
-                    initial={{ opacity: 0, x: 50, scale: 0.95 }}
-                    animate={{ opacity: 1, x: 0, scale: 1 }}
-                    exit={{ opacity: 0, x: -50, scale: 0.95 }}
-                    transition={{ duration: 0.5, type: "spring", bounce: 0.3 }}
-                    className="bg-deep-charcoal border border-charcoal p-6 rounded-lg relative group hover:border-gray-600 transition-colors duration-500 mb-6"
+            <div className="relative">
+              {/* Fade edges */}
+              <div className="absolute top-0 bottom-0 left-0 w-8 bg-gradient-to-r from-matte-black to-transparent z-10 pointer-events-none hidden md:block"></div>
+              <div className="absolute top-0 bottom-0 right-0 w-8 bg-gradient-to-l from-matte-black to-transparent z-10 pointer-events-none hidden md:block"></div>
+
+              <div 
+                ref={scrollContainerRef}
+                className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-8 cursor-grab active:cursor-grabbing"
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                onMouseEnter={() => setIsAutoPlaying(false)}
+                onMouseLeave={() => setIsAutoPlaying(true)}
+                onTouchStart={() => setIsAutoPlaying(false)}
+              >
+                {/* CSS to hide scrollbar for webkit */}
+                <style dangerouslySetInnerHTML={{__html: `
+                  div::-webkit-scrollbar { display: none; }
+                `}} />
+
+                {testimonialsPool.map((testimonial, index) => (
+                  <div
+                    key={index}
+                    className="min-w-[100%] md:min-w-[calc(50%-12px)] snap-center shrink-0"
                   >
-                    <div className="flex justify-between items-start mb-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center text-white font-semibold text-lg border border-gray-600">
-                          {testimonial.author.charAt(0)}
+                    <div className="bg-deep-charcoal border border-charcoal p-8 rounded-lg h-full flex flex-col hover:border-metallic-gold/50 transition-colors duration-500">
+                      <div className="flex justify-between items-start mb-6">
+                        <div className="flex items-center gap-4">
+                          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-charcoal to-black flex items-center justify-center text-white font-bold text-xl border border-gray-600 shadow-inner">
+                            {testimonial.author.charAt(0)}
+                          </div>
+                          <div>
+                            <p className="text-white font-semibold">{testimonial.author}</p>
+                            <p className="text-xs text-gray-400 mt-0.5">{testimonial.role}</p>
+                          </div>
                         </div>
-                        <div>
-                          <p className="text-white font-semibold text-sm">{testimonial.author}</p>
-                          <p className="text-xs text-gray-400">{testimonial.role}</p>
-                        </div>
+                        <GoogleIcon />
                       </div>
-                      <GoogleIcon />
+                      
+                      <div className="flex gap-1 mb-4">
+                        {[...Array(testimonial.rating)].map((_, i) => (
+                          <Star key={i} className="w-4 h-4 fill-[#FBBC05] text-[#FBBC05]" />
+                        ))}
+                        <span className="text-gray-500 text-xs ml-2 mt-0.5">{testimonial.date}</span>
+                      </div>
+                      
+                      <p className="text-gray-300 text-sm leading-relaxed flex-grow font-light">
+                        "{testimonial.text}"
+                      </p>
                     </div>
-                    
-                    <div className="flex gap-1 mb-3">
-                      {[...Array(testimonial.rating)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-[#FBBC05] text-[#FBBC05]" />
-                      ))}
-                      <span className="text-gray-500 text-xs ml-2">{testimonial.date}</span>
-                    </div>
-                    
-                    <p className="text-gray-300 text-sm leading-relaxed">
-                      {testimonial.text}
-                    </p>
-                  </motion.div>
+                  </div>
                 ))}
-              </AnimatePresence>
+              </div>
+              
+              {/* Scroll Hint */}
+              <div className="flex justify-center items-center gap-2 mt-2 opacity-50">
+                <div className="w-2 h-2 rounded-full bg-metallic-gold"></div>
+                <div className="w-2 h-2 rounded-full bg-charcoal"></div>
+                <div className="w-2 h-2 rounded-full bg-charcoal"></div>
+                <span className="text-xs text-gray-500 uppercase tracking-widest ml-2">Swipe to read</span>
+              </div>
             </div>
           </div>
 
