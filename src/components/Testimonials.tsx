@@ -136,15 +136,17 @@ export default function Testimonials() {
 
     const interval = setInterval(() => {
       if (scrollContainerRef.current) {
-        const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+        const { scrollTop, scrollHeight, clientHeight } = scrollContainerRef.current;
         
-        // If reached the end, go back to start
-        if (scrollLeft + clientWidth >= scrollWidth - 10) {
-          scrollContainerRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+        // If reached the bottom, go back to top
+        if (scrollTop + clientHeight >= scrollHeight - 10) {
+          scrollContainerRef.current.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
-          // Scroll by one card width approximately
-          const cardWidth = clientWidth >= 1024 ? clientWidth / 2 : clientWidth; // Show 2 on Desktop, 1 on Mobile
-          scrollContainerRef.current.scrollBy({ left: cardWidth, behavior: 'smooth' });
+          // Scroll down by roughly one card height (approx 200px)
+          const cardHeight = scrollContainerRef.current.children[1] 
+            ? (scrollContainerRef.current.children[1] as HTMLElement).offsetHeight + 24 // 24px is gap
+            : 200;
+          scrollContainerRef.current.scrollBy({ top: cardHeight, behavior: 'smooth' });
         }
       }
     }, 6000); // 6 seconds per slide
@@ -156,8 +158,8 @@ export default function Testimonials() {
     setIsDragging(true);
     setIsAutoPlaying(false);
     if (scrollContainerRef.current) {
-      setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
-      setScrollLeft(scrollContainerRef.current.scrollLeft);
+      setStartX(e.pageY - scrollContainerRef.current.offsetTop);
+      setScrollLeft(scrollContainerRef.current.scrollTop);
     }
   };
 
@@ -174,18 +176,19 @@ export default function Testimonials() {
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isDragging || !scrollContainerRef.current) return;
     e.preventDefault();
-    const x = e.pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - startX) * 2; // Scroll-fast
-    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
+    const y = e.pageY - scrollContainerRef.current.offsetTop;
+    const walk = (y - startX) * 2; // Scroll-fast
+    scrollContainerRef.current.scrollTop = scrollLeft - walk;
   };
   
-  const scroll = (direction: 'left' | 'right') => {
+  const scroll = (direction: 'up' | 'down') => {
     setIsAutoPlaying(false);
     if (scrollContainerRef.current) {
-      const { clientWidth } = scrollContainerRef.current;
-      const cardWidth = clientWidth >= 1024 ? clientWidth / 2 : clientWidth;
+      const cardHeight = scrollContainerRef.current.children[1] 
+            ? (scrollContainerRef.current.children[1] as HTMLElement).offsetHeight + 24
+            : 200;
       scrollContainerRef.current.scrollBy({ 
-        left: direction === 'left' ? -cardWidth : cardWidth, 
+        top: direction === 'up' ? -cardHeight : cardHeight, 
         behavior: 'smooth' 
       });
       // Resume autoplay after 10s of clicking
@@ -196,7 +199,7 @@ export default function Testimonials() {
   return (
     <section id="why-us" className="py-32 bg-matte-black border-t border-charcoal relative overflow-hidden">
       <div className="container mx-auto px-6 max-w-7xl">
-        <div className="flex flex-col lg:flex-row gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
           
           {/* Philosophy / About Block */}
           <motion.div 
@@ -204,7 +207,7 @@ export default function Testimonials() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="space-y-8 lg:w-1/3 shrink-0"
+            className="space-y-8 sticky top-32"
           >
             <div>
               <h2 className="text-sm uppercase tracking-widest text-metallic-gold font-semibold mb-4">
@@ -236,8 +239,8 @@ export default function Testimonials() {
             </div>
           </motion.div>
 
-          {/* Google-Style Testimonials Carousel */}
-          <div className="lg:w-2/3 w-full">
+          {/* Google-Style Testimonials Vertical Scroll */}
+          <div className="w-full">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
               <div className="flex items-center gap-3">
                 <GoogleIcon />
@@ -259,27 +262,13 @@ export default function Testimonials() {
             </div>
 
             <div className="relative group">
-              {/* Fade edges */}
-              <div className="absolute top-0 bottom-0 left-0 w-8 bg-gradient-to-r from-matte-black to-transparent z-10 pointer-events-none hidden md:block"></div>
-              <div className="absolute top-0 bottom-0 right-0 w-8 bg-gradient-to-l from-matte-black to-transparent z-10 pointer-events-none hidden md:block"></div>
-
-              {/* Navigation Arrows */}
-              <button 
-                onClick={() => scroll('left')}
-                className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-black/80 border border-charcoal rounded-full flex items-center justify-center text-white hover:border-metallic-gold transition-colors opacity-0 group-hover:opacity-100 disabled:opacity-0"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <button 
-                onClick={() => scroll('right')}
-                className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-black/80 border border-charcoal rounded-full flex items-center justify-center text-white hover:border-metallic-gold transition-colors opacity-0 group-hover:opacity-100 disabled:opacity-0"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
+              {/* Fade edges top/bottom */}
+              <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-matte-black to-transparent z-10 pointer-events-none hidden md:block"></div>
+              <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-matte-black to-transparent z-10 pointer-events-none hidden md:block"></div>
 
               <div 
                 ref={scrollContainerRef}
-                className={`flex gap-6 overflow-x-auto pb-8 ${isDragging ? 'cursor-grabbing snap-none' : 'cursor-grab snap-x snap-mandatory'}`}
+                className={`flex flex-col gap-6 overflow-y-auto max-h-[700px] pb-16 ${isDragging ? 'cursor-grabbing snap-none' : 'cursor-grab snap-y snap-mandatory'}`}
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 onMouseEnter={() => setIsAutoPlaying(false)}
                 onMouseLeave={handleMouseLeave}
@@ -296,7 +285,7 @@ export default function Testimonials() {
                 {testimonialsPool.map((testimonial, index) => (
                   <div
                     key={index}
-                    className="min-w-[100%] md:min-w-[calc(50%-12px)] snap-center shrink-0"
+                    className="w-full snap-center shrink-0"
                   >
                     <div className="bg-deep-charcoal border border-charcoal p-8 rounded-lg h-full flex flex-col hover:border-metallic-gold/50 transition-colors duration-500">
                       <div className="flex justify-between items-start mb-6">
@@ -328,11 +317,11 @@ export default function Testimonials() {
               </div>
               
               {/* Scroll Hint */}
-              <div className="flex justify-center items-center gap-2 mt-2 opacity-50">
+              <div className="flex justify-center items-center gap-2 mt-4 opacity-50 absolute bottom-0 left-0 right-0 pb-2 bg-matte-black/80 backdrop-blur-sm z-20">
                 <div className="w-2 h-2 rounded-full bg-metallic-gold"></div>
                 <div className="w-2 h-2 rounded-full bg-charcoal"></div>
                 <div className="w-2 h-2 rounded-full bg-charcoal"></div>
-                <span className="text-xs text-gray-500 uppercase tracking-widest ml-2">Swipe to read</span>
+                <span className="text-xs text-gray-500 uppercase tracking-widest ml-2">Scroll to read more</span>
               </div>
             </div>
           </div>
