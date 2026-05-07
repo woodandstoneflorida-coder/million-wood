@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Grid, Box, Columns, Layers } from "lucide-react";
+import { Grid, Box, Columns, Layers, Plus } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
 import GalleryModal from "./GalleryModal";
@@ -90,8 +90,13 @@ export default function Services() {
                 
                 <div className="relative z-10 flex flex-col h-full justify-between">
                   <div>
-                    <div className="mb-6 inline-flex p-4 rounded-full bg-charcoal text-metallic-gold group-hover:bg-metallic-gold group-hover:text-matte-black transition-colors duration-500">
-                      <service.icon className="w-8 h-8" />
+                    <div className="flex justify-between items-start mb-6">
+                      <div className="inline-flex p-4 rounded-full bg-charcoal text-metallic-gold group-hover:bg-metallic-gold group-hover:text-matte-black transition-colors duration-500">
+                        <service.icon className="w-8 h-8" />
+                      </div>
+                      <div className="w-10 h-10 rounded-full border border-gray-600 bg-black/40 backdrop-blur-sm flex items-center justify-center text-gray-400 group-hover:bg-metallic-gold group-hover:text-black group-hover:border-metallic-gold transition-all duration-300 shadow-xl">
+                        <Plus className="w-5 h-5" />
+                      </div>
                     </div>
                     <h3 className="text-2xl font-semibold mb-4 text-white group-hover:text-gradient-gold transition-all duration-300">
                       {service.title}
@@ -100,8 +105,8 @@ export default function Services() {
                       {service.description}
                     </p>
                   </div>
-                  <div className="mt-8 pt-6 border-t border-charcoal/50 group-hover:border-metallic-gold/30 flex items-center text-sm font-medium tracking-wider uppercase text-metallic-gold opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-                    Discover More &rarr;
+                  <div className="mt-8 pt-6 border-t border-charcoal/50 group-hover:border-metallic-gold/30 flex items-center text-sm font-medium tracking-wider uppercase text-metallic-gold opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transform translate-y-0 lg:translate-y-4 lg:group-hover:translate-y-0 transition-all duration-500">
+                    Click to View Gallery &rarr;
                   </div>
                 </div>
               </motion.div>
