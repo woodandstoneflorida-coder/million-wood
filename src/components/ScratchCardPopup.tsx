@@ -243,7 +243,10 @@ export default function ScratchCardPopup() {
                     href={`https://wa.me/17542673047?text=Hi!%20I%20want%20to%20freeze%20my%20Golden%20Ticket%20discount%20code:%20${discountCode}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={closePopup}
+                    onClick={() => {
+                      trackMetaEvent('Contact', { method: 'WhatsApp_GoldenTicket' }, true);
+                      closePopup();
+                    }}
                     className="w-full px-6 py-3 bg-[#25D366] text-white font-bold uppercase tracking-widest text-xs hover:bg-[#128C7E] transition-colors shadow-[0_0_15px_rgba(37,211,102,0.3)] flex items-center justify-center gap-2"
                   >
                     Freeze via WhatsApp

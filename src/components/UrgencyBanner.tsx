@@ -99,6 +99,7 @@ export default function UrgencyBanner() {
           href={`https://wa.me/17542673047?text=Hi!%20I%20want%20to%20freeze%20my%20Golden%20Ticket%20discount%20code:%20${activeCode}`}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackMetaEvent('Contact', { method: 'WhatsApp_UrgencyBanner' }, true)}
           className="ml-2 bg-[#25D366] text-white px-3 py-1 rounded-sm text-[9px] md:text-[10px] font-bold uppercase tracking-widest hover:bg-[#128C7E] transition-colors"
         >
           Freeze Now

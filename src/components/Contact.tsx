@@ -98,7 +98,7 @@ export default function Contact() {
             </div>
 
             <div className="space-y-6">
-              <a href="tel:+17542673047" className="flex items-center gap-4 group cursor-pointer hover:opacity-80 transition-opacity">
+              <a href="tel:+17542673047" onClick={() => trackMetaEvent('Contact', { method: 'Phone' }, true)} className="flex items-center gap-4 group cursor-pointer hover:opacity-80 transition-opacity">
                 <div className="w-12 h-12 flex items-center justify-center bg-deep-charcoal border border-charcoal group-hover:border-metallic-gold transition-colors duration-300">
                   <Phone className="w-5 h-5 text-metallic-gold" />
                 </div>
@@ -108,7 +108,7 @@ export default function Contact() {
                 </div>
               </a>
               
-              <a href="mailto:millionwoodusa@gmail.com" className="flex items-center gap-4 group cursor-pointer hover:opacity-80 transition-opacity">
+              <a href="mailto:millionwoodusa@gmail.com" onClick={() => trackMetaEvent('Contact', { method: 'Email' }, true)} className="flex items-center gap-4 group cursor-pointer hover:opacity-80 transition-opacity">
                 <div className="w-12 h-12 flex items-center justify-center bg-deep-charcoal border border-charcoal group-hover:border-metallic-gold transition-colors duration-300">
                   <Mail className="w-5 h-5 text-metallic-gold" />
                 </div>
@@ -118,7 +118,7 @@ export default function Contact() {
                 </div>
               </a>
 
-              <a href="https://maps.google.com/?q=7321+NW+61ST+STREET+MIAMI+FL+33166" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group cursor-pointer hover:opacity-80 transition-opacity">
+              <a href="https://maps.google.com/?q=7321+NW+61ST+STREET+MIAMI+FL+33166" target="_blank" rel="noopener noreferrer" onClick={() => trackMetaEvent('FindLocation', {}, true)} className="flex items-center gap-4 group cursor-pointer hover:opacity-80 transition-opacity">
                 <div className="w-12 h-12 flex items-center justify-center bg-deep-charcoal border border-charcoal group-hover:border-metallic-gold transition-colors duration-300">
                   <MapPin className="w-5 h-5 text-metallic-gold" />
                 </div>

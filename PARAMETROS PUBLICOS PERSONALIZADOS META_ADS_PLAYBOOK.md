@@ -1,3 +1,26 @@
+**PASO A PASO PARA CREAR LA AUDIENCIA:**
+1. Ve a tu **Business Manager** > **Públicos** (Audiences).
+2. Haz clic en **Crear Público** > **Público Personalizado** (Custom Audience).
+3. Como origen, selecciona **Sitio web** y dale a *Siguiente*.
+4. En la configuración del público:
+   * **Origen:** Selecciona tu Píxel de Million Wood.
+   * **Eventos:** Despliega el menú y selecciona **Personas que visitaron páginas web específicas** (People who visited specific web pages). *¡Esto es crucial! No elijas un evento, elige páginas web específicas.*
+   * **Retención:** 30, 60 o 90 días (según tu estrategia).
+5. En las reglas de la URL:
+   * Asegúrate de que el selector diga **"Contiene"** (Contains). *¡NUNCA uses "Es igual a"!*
+6. En el cuadro de texto, pega la **Palabra Clave** exacta según la audiencia que quieras crear:
+   * Para los que usaron el **Estudio de Diseño**: escribe `section=design-studio`
+   * Para los que vieron **Kitchen Cabinets**: escribe `service=kitchens`
+   * Para los que vieron **Custom Closets**: escribe `service=closets`
+   * Para los que vieron **CNC Services**: escribe `service=cnc`
+   * Para los que vieron **Wall Panels**: escribe `service=panels`
+   * Para los que tocaron el **Formulario de Contacto**: escribe `section=contact-form`
+   * Para los que dejaron **Expirar la Tarjeta Dorada**: escribe `status=offer-expired`
+7. Ponle un nombre claro a tu público (ej. "Retargeting - Usaron el Configurador 30D") y haz clic en **Crear público**.
+
+**¿Por qué funciona esto a la perfección?**
+Cuando el usuario usa el configurador, el código cambia silenciosamente el enlace superior a `/?section=design-studio`. Inmediatamente después, enviamos información a Facebook. Facebook "toma una foto" de la URL en ese milisegundo y guarda a ese usuario en el público que acabas de crear que "contiene" esa palabra clave. Si el usuario después toca el menú y la URL pasa a `/?section=design-studio#services`, la regla "contiene" seguirá atrapándolo sin problemas.
+
 # 🎯 MILLION WOOD - MANUAL MAESTRO DE META ADS Y RETARGETING
 
 **Para:** Equipo Creativo, Media Buyers y Estrategas de Marketing.
