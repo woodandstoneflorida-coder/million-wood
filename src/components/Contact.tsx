@@ -144,6 +144,9 @@ export default function Contact() {
               onSubmit={handleSubmit}
               onFocus={() => {
                 if (!(window as any)._formStartedTracked) {
+                  if (typeof window !== 'undefined') {
+                    window.history.pushState({}, '', '/?section=contact-form');
+                  }
                   trackMetaEvent('StartedForm', {}, true);
                   (window as any)._formStartedTracked = true; // Prevents firing multiple times
                 }

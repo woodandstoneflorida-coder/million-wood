@@ -21,6 +21,9 @@ export default function UrgencyBanner() {
         calculateTimeLeft(expiresAt);
       } else {
         // Expired
+        if (typeof window !== 'undefined') {
+          window.history.pushState({}, '', '/?status=offer-expired');
+        }
         trackMetaEvent('ExpiredDiscount', { code_lost: code }, true);
 
         const level = localStorage.getItem("mw_discount_level");

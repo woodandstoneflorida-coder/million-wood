@@ -23,6 +23,9 @@ export default function Configurator({ onClose }: { onClose?: () => void }) {
   const trackStart = () => {
     if (!hasTrackedStart) {
       setHasTrackedStart(true);
+      if (typeof window !== 'undefined') {
+        window.history.pushState({}, '', '/?section=design-studio');
+      }
       trackMetaEvent('ConfiguratorStarted', {}, true);
     }
   };
@@ -228,6 +231,7 @@ I would like to get a quote for this exact configuration.`;
                     key={m.id}
                     onClick={() => {
                       setMaterial(m);
+                      trackStart();
                       trackMetaEvent('ViewMaterial', { material_name: m.name }, true);
                     }}
                     className={`flex flex-col items-center justify-center p-2 border transition-all duration-300 ${
