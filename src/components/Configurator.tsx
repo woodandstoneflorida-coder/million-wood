@@ -21,11 +21,14 @@ export default function Configurator({ onClose }: { onClose?: () => void }) {
   const [hasTrackedStart, setHasTrackedStart] = useState(false);
 
   const trackStart = () => {
+    // Asegurar siempre que la URL cambie al usar el estudio (incluso si regresan de otra sección)
+    if (typeof window !== 'undefined' && !window.location.search.includes('section=design-studio')) {
+      window.history.pushState({}, '', '/?section=design-studio');
+    }
+
+    // El evento del Píxel solo se dispara la primera vez para no hacer spam
     if (!hasTrackedStart) {
       setHasTrackedStart(true);
-      if (typeof window !== 'undefined') {
-        window.history.pushState({}, '', '/?section=design-studio');
-      }
       trackMetaEvent('ConfiguratorStarted', {}, true);
     }
   };
