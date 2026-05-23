@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Outfit, Geist_Mono } from "next/font/google";
 import { GoogleAnalytics } from '@next/third-parties/google';
 import Script from 'next/script';
+import { Analytics } from "@vercel/analytics/next";
 import WhatsAppButton from '@/components/WhatsAppButton';
 import UrgencyBanner from '@/components/UrgencyBanner';
 import ScratchCardPopup from '@/components/ScratchCardPopup';
@@ -87,6 +88,7 @@ export default function RootLayout({
             </noscript>
           </>
         )}
+        <Analytics />
       </body>
     </html>
   );
