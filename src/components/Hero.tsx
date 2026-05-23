@@ -2,15 +2,20 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background image and gradients */}
       <div className="absolute inset-0 z-0">
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-luminosity"
-          style={{ backgroundImage: "url('/hero/cocina-moderna.png')" }}
+        <Image 
+          src="/hero/cocina-moderna.png"
+          alt="Luxury Modern Kitchen Custom Carpentry"
+          fill
+          priority
+          quality={85}
+          className="object-cover object-center opacity-40 mix-blend-luminosity"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-matte-black via-matte-black/80 to-matte-black/40" />
       </div>
