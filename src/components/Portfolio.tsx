@@ -8,9 +8,9 @@ import { trackMetaEvent } from "@/lib/metaPixel";
 const portfolioItems = [
   { src: "/services/cocinas/cocina.1.jpg", alt: "Modern Custom Kitchen" },
   { src: "/services/cocinas/cocina.3.jpg", alt: "Luxury Wood Cabinetry" },
-  { src: "/services/cocinas/cocina.4.jpg", alt: "Premium Finishes" },
+  { src: "/services/paneles/seccion servicios wall panel/wall panel 3.jpg", alt: "Elegant Custom Wall Panel" },
   { src: "/services/cocinas/cocina.5.jpg", alt: "High-End Design" },
-  { src: "/services/cocinas/cocina.7.jpg", alt: "Precision Installation" },
+  { src: "/services/paneles/seccion servicios wall panel/wall panel1.jpg", alt: "Geometric Architectural Panel" },
   { src: "/services/cocinas/cocina.8.jpg", alt: "Custom Carpentry" },
 ];
 

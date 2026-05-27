@@ -20,6 +20,24 @@
 
 **¿Por qué funciona esto a la perfección?**
 Cuando el usuario usa el configurador, el código cambia silenciosamente el enlace superior a `/?section=design-studio`. Inmediatamente después, enviamos información a Facebook. Facebook "toma una foto" de la URL en ese milisegundo y guarda a ese usuario en el público que acabas de crear que "contiene" esa palabra clave. Si el usuario después toca el menú y la URL pasa a `/?section=design-studio#services`, la regla "contiene" seguirá atrapándolo sin problemas.
+Para estos botones de salida (WhatsApp, Correo, Redes) usamos una estrategia mucho más fuerte que la de la URL.
+
+Como recordarás, el problema anterior era que los eventos Personalizados (inventados por nosotros) a veces Facebook los ignora si no tienen volumen. Pero para estos botones usamos un Evento Estándar de Meta, específicamente el evento llamado Contact (Contacto). Los eventos estándar Facebook los reconoce de inmediato, el 100% de las veces, porque están en su código base.
+
+Por lo tanto, no necesitas una URL específica para los botones, usarás el evento nativo de Facebook con un "filtro".
+
+¿Cómo configurarlo en Facebook?
+Ve a Públicos > Crear Público Personalizado > Sitio Web.
+En la lista desplegable de eventos, esta vez NO elijas "Personas que visitaron páginas específicas". Baja un poco más en la lista y verás tus Eventos Estándar. Selecciona el evento Contact.
+Justo debajo, haz clic en el botón que dice "Precisar más" o "Refinar por" (Refine by).
+Selecciona la opción de "URL/Parámetro".
+Escoge Parameter (Parámetro) y escribe method.
+Al lado, selecciona "Contiene" y escribe la palabra clave del botón:
+Para WhatsApp normal: WhatsApp
+Para el banner de urgencia: WhatsApp_UrgencyBanner
+Para correo: Email
+Para teléfono: Phone
+¡Así aislarás perfectamente a los que tocaron WhatsApp de los que te llamaron por teléfono!
 
 # 🎯 MILLION WOOD - MANUAL MAESTRO DE META ADS Y RETARGETING
 

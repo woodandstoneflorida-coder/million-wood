@@ -34,7 +34,7 @@ const services = [
     title: "Wall Panels",
     description: "Architectural wall panels with intricate geometric patterns or seamless, elegant finishes.",
     icon: Columns,
-    image: "/services/paneles/Wall Panels (3).jpeg",
+    image: "/services/paneles/seccion servicios wall panel/wall panel1.jpg",
   },
 ];
 

@@ -49,9 +49,12 @@ const galleryData: Record<string, { title: string; images: string[] }> = {
   panels: {
     title: "Wall Panels",
     images: [
-      "/services/paneles/Wall Panels (1).jpeg",
-      "/services/paneles/Wall Panels (2).jpeg",
-      "/services/paneles/Wall Panels (3).jpeg"
+      "/services/paneles/seccion servicios wall panel/wall panel1.jpg",
+      "/services/paneles/seccion servicios wall panel/wall panel2-.jpg",
+      "/services/paneles/seccion servicios wall panel/wall panel 3.jpg",
+      "/services/paneles/seccion servicios wall panel/wall panel 4.jpg",
+      "/services/paneles/seccion servicios wall panel/wall panel 5.jpg",
+      "/services/paneles/seccion servicios wall panel/wall panel 6.jpg"
     ]
   }
 };
