@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Quote, Star, Plus, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import ReviewModal from "./ReviewModal";
+import { useLanguage } from "@/lib/LanguageContext";
 
 const testimonialsPool = [
   {
@@ -124,6 +125,7 @@ const GoogleIcon = () => (
 );
 
 export default function Testimonials() {
+  const { t } = useLanguage();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
@@ -211,30 +213,30 @@ export default function Testimonials() {
           >
             <div>
               <h2 className="text-sm uppercase tracking-widest text-metallic-gold font-semibold mb-4">
-                Our Philosophy
+                {t("testimonials.philosophyTitle")}
               </h2>
               <h3 className="text-4xl md:text-5xl font-bold leading-tight mb-8">
-                Mastery Meets <br />
-                <span className="text-gray-500 font-light">Technology</span>
+                {t("testimonials.philosophyH3_1")} <br />
+                <span className="text-gray-500 font-light">{t("testimonials.philosophyH3_2")}</span>
               </h3>
             </div>
             
             <p className="text-gray-400 text-lg leading-relaxed font-light">
-              At Million Wood, we believe that true luxury lies in absolute precision. We are not just carpenters; we are digital craftsmen. 
+              {t("testimonials.philosophyP1")}
             </p>
             <p className="text-gray-400 text-lg leading-relaxed font-light">
-              By blending generations of traditional woodworking mastery with the world's most advanced CNC technology and parametric design software, we create architectural elements that were previously thought impossible.
+              {t("testimonials.philosophyP2")}
             </p>
             
             <div className="pt-6 border-t border-charcoal flex items-center gap-6">
               <div className="flex flex-col">
                 <span className="text-3xl font-bold text-white">15+</span>
-                <span className="text-xs uppercase tracking-widest text-gray-500 mt-1">Years Experience</span>
+                <span className="text-xs uppercase tracking-widest text-gray-500 mt-1">{t("testimonials.experience")}</span>
               </div>
               <div className="w-[1px] h-12 bg-charcoal"></div>
               <div className="flex flex-col">
                 <span className="text-3xl font-bold text-white">100%</span>
-                <span className="text-xs uppercase tracking-widest text-gray-500 mt-1">Custom Built</span>
+                <span className="text-xs uppercase tracking-widest text-gray-500 mt-1">{t("testimonials.customBuilt")}</span>
               </div>
             </div>
           </motion.div>
@@ -244,7 +246,7 @@ export default function Testimonials() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
               <div className="flex items-center gap-3">
                 <GoogleIcon />
-                <span className="text-white font-medium">Google Reviews</span>
+                <span className="text-white font-medium">{t("testimonials.googleReviews")}</span>
                 <div className="flex gap-1 ml-2">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="w-4 h-4 fill-[#FBBC05] text-[#FBBC05]" />
@@ -257,7 +259,7 @@ export default function Testimonials() {
                 className="flex items-center gap-2 text-xs uppercase tracking-widest font-semibold text-metallic-gold border border-metallic-gold/30 hover:border-metallic-gold px-4 py-2 transition-colors self-start sm:self-auto"
               >
                 <Plus className="w-3 h-3" />
-                Leave a Review
+                {t("testimonials.leaveReview")}
               </button>
             </div>
 
@@ -321,7 +323,7 @@ export default function Testimonials() {
                 <div className="w-2 h-2 rounded-full bg-metallic-gold"></div>
                 <div className="w-2 h-2 rounded-full bg-charcoal"></div>
                 <div className="w-2 h-2 rounded-full bg-charcoal"></div>
-                <span className="text-xs text-gray-500 uppercase tracking-widest ml-2">Scroll to read more</span>
+                <span className="text-xs text-gray-500 uppercase tracking-widest ml-2">{t("testimonials.scrollHint")}</span>
               </div>
             </div>
           </div>

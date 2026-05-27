@@ -3,8 +3,11 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
+import { useLanguage } from "@/lib/LanguageContext";
 
 export default function Hero() {
+  const { t } = useLanguage();
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background image and gradients */}
@@ -28,14 +31,14 @@ export default function Hero() {
           className="max-w-4xl mx-auto"
         >
           <h2 className="text-metallic-bronze tracking-widest uppercase text-sm font-semibold mb-6">
-            Precision • Quality • Mastery
+            {t("hero.sub")}
           </h2>
           <h1 className="text-5xl md:text-7xl font-bold mb-8 leading-tight tracking-tight">
-            Elevating Spaces with <br />
-            <span className="text-gradient-gold">Master Carpentry</span>
+            {t("hero.title1")} <br />
+            <span className="text-gradient-gold">{t("hero.title2")}</span>
           </h1>
           <p className="text-light-gray text-lg md:text-xl mb-12 max-w-2xl mx-auto font-light leading-relaxed">
-            High-end carpentry and advanced CNC fabrication tailored to create luxurious, custom environments with absolute precision.
+            {t("hero.description")}
           </p>
 
           <motion.div
@@ -50,7 +53,7 @@ export default function Hero() {
             >
               <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-white rounded-full group-hover:w-56 group-hover:h-56 opacity-10"></span>
               <span className="relative flex items-center gap-2">
-                Start a Project <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                {t("hero.ctaPrimary")} <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </span>
             </a>
             
@@ -58,7 +61,7 @@ export default function Hero() {
               href="#services"
               className="px-8 py-4 text-white uppercase tracking-wider text-sm font-semibold border border-charcoal hover:border-metallic-gold transition-colors duration-300"
             >
-              Explore Services
+              {t("hero.ctaSecondary")}
             </a>
           </motion.div>
         </motion.div>
@@ -71,7 +74,7 @@ export default function Hero() {
         transition={{ delay: 1, duration: 1 }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
-        <span className="text-xs uppercase tracking-widest text-gray-500">Scroll</span>
+        <span className="text-xs uppercase tracking-widest text-gray-500">{t("hero.scroll")}</span>
         <div className="w-[1px] h-12 bg-gradient-to-b from-gray-500 to-transparent" />
       </motion.div>
     </section>

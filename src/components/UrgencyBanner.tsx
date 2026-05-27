@@ -3,10 +3,12 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { trackMetaEvent } from "@/lib/metaPixel";
+import { useLanguage } from "@/lib/LanguageContext";
 
 export default function UrgencyBanner() {
   const [activeCode, setActiveCode] = useState<string | null>(null);
   const [timeLeft, setTimeLeft] = useState<{ d: number; h: number; m: number; s: number } | null>(null);
+  const { t } = useLanguage();
 
   const checkCode = () => {
     const code = localStorage.getItem("mw_discount_code");
@@ -76,6 +78,13 @@ export default function UrgencyBanner() {
 
   if (!activeCode || !timeLeft) return null;
 
+  const getWhatsAppLink = () => {
+    const text = t("urgency.freezeBtn") === "Congelar Ahora"
+      ? `¡Hola! Quiero congelar mi código de descuento Golden Ticket: ${activeCode}`
+      : `Hi! I want to freeze my Golden Ticket discount code: ${activeCode}`;
+    return `https://wa.me/17542673047?text=${encodeURIComponent(text)}`;
+  };
+
   return (
     <AnimatePresence>
       <motion.div 
@@ -84,11 +93,11 @@ export default function UrgencyBanner() {
         className="fixed bottom-8 left-1/2 z-[100] flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4 bg-matte-black/95 backdrop-blur-md text-white py-3 px-6 rounded-full shadow-[0_-10px_40px_rgba(0,0,0,0.8)] border border-metallic-gold/40 whitespace-nowrap"
       >
         <span className="text-[10px] md:text-xs font-light uppercase tracking-widest text-center text-gray-300">
-          Code <span className="text-metallic-gold font-bold mx-1 tracking-widest">{activeCode}</span> Activated
+          {t("urgency.codeActivated").replace("{code}", activeCode)}
         </span>
         <span className="hidden md:inline text-white/20 font-light">|</span>
         <span className="text-[10px] md:text-xs font-medium tracking-widest flex items-center gap-2 text-gray-300">
-          Time left to freeze code: 
+          {t("urgency.timeLeft")}
           <span className="font-mono font-bold text-metallic-gold">
             {timeLeft.d > 0 && `${timeLeft.d}d `}
             {timeLeft.h.toString().padStart(2, '0')}h {timeLeft.m.toString().padStart(2, '0')}m {timeLeft.s.toString().padStart(2, '0')}s
@@ -96,13 +105,13 @@ export default function UrgencyBanner() {
         </span>
         
         <a 
-          href={`https://wa.me/17542673047?text=Hi!%20I%20want%20to%20freeze%20my%20Golden%20Ticket%20discount%20code:%20${activeCode}`}
+          href={getWhatsAppLink()}
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => trackMetaEvent('Contact', { method: 'WhatsApp_UrgencyBanner' }, true)}
           className="ml-2 bg-[#25D366] text-white px-3 py-1 rounded-sm text-[9px] md:text-[10px] font-bold uppercase tracking-widest hover:bg-[#128C7E] transition-colors"
         >
-          Freeze Now
+          {t("urgency.freezeBtn")}
         </a>
       </motion.div>
     </AnimatePresence>

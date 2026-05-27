@@ -3,26 +3,20 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle2, X } from "lucide-react";
+import { useLanguage } from "@/lib/LanguageContext";
 
 const NAMES = ["Carlos", "Maria", "John", "Sarah", "David", "Elena", "Michael", "Laura", "Roberto", "Jessica"];
 const LOCATIONS = [
   "Miami", "Brickell", "Coral Gables", "Doral", "Weston", 
   "Pinecrest", "Aventura", "Fort Lauderdale", "Boca Raton", "West Palm Beach"
 ];
-const ACTIONS = [
-  "acaba de solicitar una cotización",
-  "reservó una asesoría 3D",
-  "desbloqueó un Golden Ticket",
-  "inició el diseño de su clóset",
-  "cotizó un proyecto CNC"
-];
 
 export default function SocialProofPopup() {
   const [isVisible, setIsVisible] = useState(false);
   const [notification, setNotification] = useState({ name: "", location: "", action: "", timeAgo: "" });
+  const { t, language } = useLanguage();
 
   useEffect(() => {
-    // No mostrar inmediatamente al cargar la página
     let isMounted = true;
     
     const showRandomNotification = () => {
@@ -30,10 +24,12 @@ export default function SocialProofPopup() {
       
       const name = NAMES[Math.floor(Math.random() * NAMES.length)];
       const location = LOCATIONS[Math.floor(Math.random() * LOCATIONS.length)];
-      const action = ACTIONS[Math.floor(Math.random() * ACTIONS.length)];
+      const actionsPool = t("socialProof.actions") as string[];
+      const action = actionsPool[Math.floor(Math.random() * actionsPool.length)];
       const time = Math.floor(Math.random() * 15) + 1; // 1 to 15 mins ago
+      const timeAgoText = t("socialProof.timeAgo").replace("{time}", time.toString());
 
-      setNotification({ name, location, action, timeAgo: `Hace ${time} min` });
+      setNotification({ name, location, action, timeAgo: timeAgoText });
       setIsVisible(true);
 
       // Hide after 5 seconds
@@ -58,7 +54,7 @@ export default function SocialProofPopup() {
       isMounted = false;
       clearTimeout(initialTimer);
     };
-  }, []);
+  }, [t]);
 
   return (
     <AnimatePresence>
@@ -75,7 +71,7 @@ export default function SocialProofPopup() {
           </div>
           <div className="flex-1 pr-4">
             <p className="text-white text-sm font-medium">
-              {notification.name} en <span className="text-metallic-gold">{notification.location}</span>
+              {notification.name} {language === "es" ? "en" : "in"} <span className="text-metallic-gold">{notification.location}</span>
             </p>
             <p className="text-gray-400 text-xs mt-0.5 leading-snug">
               {notification.action}

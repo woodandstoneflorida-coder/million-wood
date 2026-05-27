@@ -2,35 +2,12 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-
-const steps = [
-  {
-    number: "01",
-    title: "3D Parametric Design",
-    description: "We utilize Mozaik software for precise cabinet engineering, ensuring perfect fit and functionality before a single board is cut.",
-    tech: "Mozaik 3D"
-  },
-  {
-    number: "02",
-    title: "Complex Geometry",
-    description: "For custom organic shapes and intricate panels, we model using Rhino and Grasshopper, pushing the boundaries of traditional woodwork.",
-    tech: "Rhino / Grasshopper"
-  },
-  {
-    number: "03",
-    title: "Industrial CNC Machining",
-    description: "Our high-end industrial CNC routers execute the digital models with fraction-of-a-millimeter accuracy, minimizing waste and maximizing quality.",
-    tech: "Precision CNC"
-  },
-  {
-    number: "04",
-    title: "Masterful Installation",
-    description: "The final pieces are assembled and installed by master carpenters, bringing the virtual perfection into the physical world.",
-    tech: "Expert Craftsmanship"
-  }
-];
+import { useLanguage } from "@/lib/LanguageContext";
 
 export default function Process() {
+  const { t } = useLanguage();
+  const localizedSteps = t("process.steps") as Array<{ num: string; title: string; desc: string; tech: string }>;
+
   return (
     <section id="process" className="py-32 bg-deep-charcoal border-y border-charcoal relative overflow-hidden">
       {/* Background Video */}
@@ -69,15 +46,15 @@ export default function Process() {
             viewport={{ once: true }}
             className="text-4xl md:text-5xl font-bold mb-6"
           >
-            Our Tech-Driven <br/><span className="text-gradient-gold">Process</span>
+            {t("process.title1")} <br/><span className="text-gradient-gold">{t("process.title2")}</span>
           </motion.h2>
           <p className="text-gray-400 max-w-xl text-lg font-light leading-relaxed">
-            What sets us apart is our seamless integration of advanced software and heavy industrial machinery, ensuring unparalleled precision.
+            {t("process.description")}
           </p>
         </div>
 
         <div className="space-y-20">
-          {steps.map((step, index) => (
+          {localizedSteps.map((step, index) => (
             <div key={index} className="relative flex flex-col md:flex-row items-start md:items-center">
               
               <motion.div 
@@ -88,7 +65,7 @@ export default function Process() {
                 className="hidden md:flex w-1/4 justify-end pr-16"
               >
                 <span className="text-6xl font-bold text-charcoal tracking-tighter">
-                  {step.number}
+                  {step.num}
                 </span>
               </motion.div>
               
@@ -102,11 +79,11 @@ export default function Process() {
                 className="md:w-3/4 md:pl-16 bg-matte-black/50 p-8 md:p-12 border border-charcoal hover:border-metallic-gold/30 transition-colors duration-300 w-full backdrop-blur-sm"
               >
                 <div className="flex items-center gap-4 mb-4">
-                  <span className="md:hidden text-3xl font-bold text-metallic-gold">{step.number}.</span>
+                  <span className="md:hidden text-3xl font-bold text-metallic-gold">{step.num}.</span>
                   <h3 className="text-2xl md:text-3xl font-semibold text-white">{step.title}</h3>
                 </div>
                 <p className="text-gray-400 text-lg mb-6 leading-relaxed font-light">
-                  {step.description}
+                  {step.desc}
                 </p>
                 <div className="inline-block px-4 py-2 bg-charcoal/50 text-metallic-bronze text-sm font-medium tracking-widest uppercase border border-charcoal">
                   {step.tech}

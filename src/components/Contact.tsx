@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Mail, Phone, MapPin, Sparkles, ShieldCheck, Gem } from "lucide-react";
 import { useState, useEffect } from "react";
 import { trackMetaEvent } from "@/lib/metaPixel";
+import { useLanguage } from "@/lib/LanguageContext";
 
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -11,6 +12,7 @@ export default function Contact() {
   const [errorMessage, setErrorMessage] = useState("");
   const [hasCodeChecked, setHasCodeChecked] = useState(false);
   const [discountCode, setDiscountCode] = useState("");
+  const { t, language } = useLanguage();
 
   useEffect(() => {
     const code = localStorage.getItem("mw_discount_code");
@@ -66,10 +68,10 @@ export default function Contact() {
         (e.target as HTMLFormElement).reset();
         setTimeout(() => setIsSuccess(false), 5000); // Hide success message after 5 seconds
       } else {
-        setErrorMessage(data.message || "Something went wrong. Please try again.");
+        setErrorMessage(data.message || t("contact.alerts.errorDesc"));
       }
     } catch (error) {
-      setErrorMessage("Network error. Please try again later.");
+      setErrorMessage(t("contact.alerts.errorDesc"));
     } finally {
       setIsSubmitting(false);
     }
@@ -90,10 +92,10 @@ export default function Contact() {
           >
             <div>
               <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                Let's Build <br /><span className="text-gradient-gold">Something Extraordinary</span>
+                {t("contact.title1")} <br /><span className="text-gradient-gold">{t("contact.title2")}</span>
               </h2>
               <p className="text-gray-400 text-lg font-light max-w-md">
-                Whether you're an architect, interior designer, or homeowner looking for premium custom fabrication, we're ready to bring your vision to life.
+                {t("contact.description")}
               </p>
             </div>
 
@@ -103,7 +105,9 @@ export default function Contact() {
                   <Phone className="w-5 h-5 text-metallic-gold" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500 uppercase tracking-wider mb-1">Phone</p>
+                  <p className="text-sm text-gray-500 uppercase tracking-wider mb-1">
+                    {language === "es" ? "Teléfono" : "Phone"}
+                  </p>
                   <p className="text-white font-medium group-hover:text-metallic-gold transition-colors">+1 (754) 267-3047</p>
                 </div>
               </a>
@@ -123,9 +127,13 @@ export default function Contact() {
                   <MapPin className="w-5 h-5 text-metallic-gold" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500 uppercase tracking-wider mb-1">Studio & Shop</p>
+                  <p className="text-sm text-gray-500 uppercase tracking-wider mb-1">
+                    {language === "es" ? "Taller y Showroom" : "Studio & Shop"}
+                  </p>
                   <p className="text-white font-medium group-hover:text-metallic-gold transition-colors">7321 NW 61ST STREET MIAMI FL 33166</p>
-                  <p className="text-xs text-metallic-gold mt-1 uppercase tracking-widest font-semibold">* Solamente con cita previa / By appointment only</p>
+                  <p className="text-xs text-metallic-gold mt-1 uppercase tracking-widest font-semibold">
+                    {language === "es" ? "* Solamente con cita previa" : "* By appointment only"}
+                  </p>
                 </div>
               </a>
             </div>
@@ -154,7 +162,7 @@ export default function Contact() {
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label htmlFor="name" className="text-xs uppercase tracking-widest text-gray-500 font-semibold">Name</label>
+                  <label htmlFor="name" className="text-xs uppercase tracking-widest text-gray-500 font-semibold">{t("contact.fields.name")}</label>
                   <input 
                     type="text" 
                     id="name"
@@ -165,7 +173,7 @@ export default function Contact() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label htmlFor="email" className="text-xs uppercase tracking-widest text-gray-500 font-semibold">Email</label>
+                  <label htmlFor="email" className="text-xs uppercase tracking-widest text-gray-500 font-semibold">{t("contact.fields.email")}</label>
                   <input 
                     type="email" 
                     id="email"
@@ -179,7 +187,7 @@ export default function Contact() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label htmlFor="phone" className="text-xs uppercase tracking-widest text-gray-500 font-semibold">Phone Number</label>
+                  <label htmlFor="phone" className="text-xs uppercase tracking-widest text-gray-500 font-semibold">{t("contact.fields.phone")}</label>
                   <input 
                     type="tel" 
                     id="phone"
@@ -191,19 +199,19 @@ export default function Contact() {
                 </div>
                 
                 <div className="space-y-2">
-                  <label htmlFor="service" className="text-xs uppercase tracking-widest text-gray-500 font-semibold">Service of Interest</label>
+                  <label htmlFor="service" className="text-xs uppercase tracking-widest text-gray-500 font-semibold">{t("contact.fields.interest")}</label>
                   <select 
                     id="service"
                     name="service"
                     required
                     className="w-full bg-matte-black border border-charcoal px-4 py-3 text-white focus:outline-none focus:border-metallic-gold focus:ring-1 focus:ring-metallic-gold transition-all duration-300 appearance-none"
                   >
-                    <option value="">Select a service...</option>
-                    <option value="kitchen">Kitchen Cabinets</option>
-                    <option value="closets">Custom Closets</option>
-                    <option value="cnc">CNC Services</option>
-                    <option value="panels">Wall Panels</option>
-                    <option value="other">Other</option>
+                    <option value="">{t("contact.fields.selectInterest")}</option>
+                    <option value="kitchen">{t("contact.fields.kitchens")}</option>
+                    <option value="closets">{t("contact.fields.closets")}</option>
+                    <option value="cnc">{t("contact.fields.cnc")}</option>
+                    <option value="panels">{t("contact.fields.panels")}</option>
+                    <option value="other">{t("contact.fields.custom")}</option>
                   </select>
                 </div>
               </div>
@@ -223,7 +231,9 @@ export default function Contact() {
                       </svg>
                     </div>
                   </div>
-                  <span className="text-sm text-gray-400 group-hover:text-white transition-colors">I have a Golden Ticket discount code</span>
+                  <span className="text-sm text-gray-400 group-hover:text-white transition-colors">
+                    {language === "es" ? "Tengo un código de descuento Golden Ticket" : "I have a Golden Ticket discount code"}
+                  </span>
                 </label>
 
                 <AnimatePresence>
@@ -235,7 +245,7 @@ export default function Contact() {
                       className="space-y-2 overflow-hidden"
                     >
                       <label htmlFor="discountCode" className="text-xs uppercase tracking-widest text-metallic-gold font-semibold flex items-center gap-2">
-                        <Sparkles className="w-3 h-3" /> Discount Code
+                        <Sparkles className="w-3 h-3" /> {language === "es" ? "Código de Descuento" : "Discount Code"}
                       </label>
                       <input 
                         type="text" 
@@ -252,14 +262,14 @@ export default function Contact() {
               </div>
 
               <div className="space-y-2 pt-2">
-                <label htmlFor="message" className="text-xs uppercase tracking-widest text-gray-500 font-semibold">Message</label>
+                <label htmlFor="message" className="text-xs uppercase tracking-widest text-gray-500 font-semibold">{t("contact.fields.message")}</label>
                 <textarea 
                   id="message"
                   name="message"
                   required
                   rows={5}
                   className="w-full bg-matte-black border border-charcoal px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-metallic-gold focus:ring-1 focus:ring-metallic-gold transition-all duration-300 resize-none"
-                  placeholder="Tell us about your project..."
+                  placeholder={t("contact.fields.messagePlaceholder")}
                 ></textarea>
               </div>
               
@@ -268,7 +278,11 @@ export default function Contact() {
               )}
               
               {isSuccess && (
-                <p className="text-[#25D366] text-sm font-medium">Message sent successfully! We will contact you soon.</p>
+                <div className="p-6 bg-matte-black border border-metallic-gold text-center relative overflow-hidden">
+                  <div className="absolute inset-0 bg-metallic-gold/5 animate-pulse"></div>
+                  <h4 className="text-metallic-gold font-bold uppercase tracking-widest text-sm mb-2">{t("contact.alerts.successTitle")}</h4>
+                  <p className="text-gray-300 text-xs font-light leading-relaxed">{t("contact.alerts.successDesc")}</p>
+                </div>
               )}
 
               <button 
@@ -276,21 +290,27 @@ export default function Contact() {
                 disabled={isSubmitting}
                 className="w-full py-4 bg-metallic-gold text-matte-black font-bold uppercase tracking-wider text-sm hover:bg-white transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isSubmitting ? "Sending..." : "Send Message"}
+                {isSubmitting ? t("contact.fields.submitting") : t("contact.fields.submit")}
               </button>
 
               <div className="pt-6 grid grid-cols-3 gap-4 border-t border-charcoal/50">
                 <div className="flex flex-col items-center justify-center text-center gap-2">
                   <ShieldCheck className="w-5 h-5 text-metallic-gold" />
-                  <span className="text-[10px] uppercase tracking-wider text-gray-400 font-semibold leading-tight">Licensed & Insured</span>
+                  <span className="text-[10px] uppercase tracking-wider text-gray-400 font-semibold leading-tight">
+                    {language === "es" ? "Licencia y Seguro" : "Licensed & Insured"}
+                  </span>
                 </div>
                 <div className="flex flex-col items-center justify-center text-center gap-2">
                   <Gem className="w-5 h-5 text-metallic-gold" />
-                  <span className="text-[10px] uppercase tracking-wider text-gray-400 font-semibold leading-tight">Premium Materials</span>
+                  <span className="text-[10px] uppercase tracking-wider text-gray-400 font-semibold leading-tight">
+                    {language === "es" ? "Materiales Premium" : "Premium Materials"}
+                  </span>
                 </div>
                 <div className="flex flex-col items-center justify-center text-center gap-2">
                   <MapPin className="w-5 h-5 text-metallic-gold" />
-                  <span className="text-[10px] uppercase tracking-wider text-gray-400 font-semibold leading-tight">Crafted in Miami</span>
+                  <span className="text-[10px] uppercase tracking-wider text-gray-400 font-semibold leading-tight">
+                    {language === "es" ? "Fabricado en Miami" : "Crafted in Miami"}
+                  </span>
                 </div>
               </div>
             </form>

@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Sparkles } from "lucide-react";
 import { trackMetaEvent } from "@/lib/metaPixel";
+import { useLanguage } from "@/lib/LanguageContext";
 
 export default function ScratchCardPopup() {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,6 +14,7 @@ export default function ScratchCardPopup() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const isDrawing = useRef(false);
   const scratchCount = useRef(0);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const existingCode = localStorage.getItem("mw_discount_code");
@@ -96,12 +98,12 @@ export default function ScratchCardPopup() {
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       
       // Add "Scratch Here" text
-      ctx.font = "bold 20px Inter, sans-serif";
-      ctx.fillStyle = "rgba(0,0,0,0.4)";
+      ctx.font = "bold 16px Inter, sans-serif";
+      ctx.fillStyle = "rgba(0,0,0,0.5)";
       ctx.textAlign = "center";
-      ctx.fillText("SCRATCH TO REVEAL", canvas.width / 2, canvas.height / 2);
+      ctx.fillText(t("scratchCard.scratchHere"), canvas.width / 2, canvas.height / 2 + 5);
     }
-  }, [isOpen, isRevealed]);
+  }, [isOpen, isRevealed, t]);
 
   const scratch = (e: React.MouseEvent | React.TouchEvent) => {
     if (!isDrawing.current || isRevealed) return;
@@ -165,6 +167,13 @@ export default function ScratchCardPopup() {
     }
   };
 
+  const getWhatsAppLink = () => {
+    const text = t("urgency.freezeBtn") === "Congelar Ahora"
+      ? `¡Hola! Quiero congelar mi código de descuento Golden Ticket: ${discountCode}`
+      : `Hi! I want to freeze my Golden Ticket discount code: ${discountCode}`;
+    return `https://wa.me/17542673047?text=${encodeURIComponent(text)}`;
+  };
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -190,27 +199,31 @@ export default function ScratchCardPopup() {
             <div className="p-8 text-center flex flex-col items-center">
               <Sparkles className="w-8 h-8 text-metallic-gold mb-4" />
               <h2 className="text-2xl font-bold text-white mb-2 uppercase tracking-widest">
-                Exclusive <span className="text-metallic-gold">Privilege</span>
+                {t("scratchCard.title1")} <span className="text-metallic-gold">{t("scratchCard.title2")}</span>
               </h2>
-              {discountLevel === "10" ? (
-                <p className="text-gray-400 text-sm font-light mb-4">
-                  You found 1 of the 10 Golden Tickets available today! Unlock an additional <strong className="text-metallic-gold font-semibold">10% discount</strong> on your custom woodwork quote.
-                </p>
-              ) : (
-                <p className="text-gray-400 text-sm font-light mb-4">
-                  We noticed you let your previous code expire. As a final courtesy, here is a <strong className="text-metallic-gold font-semibold">5% discount</strong> valid for 4 hours.
-                </p>
-              )}
+              <p 
+                className="text-gray-400 text-sm font-light mb-4"
+                dangerouslySetInnerHTML={{ 
+                  __html: discountLevel === "10" 
+                    ? t("scratchCard.goldenTicketDesc") 
+                    : t("scratchCard.previousExpiredDesc") 
+                }}
+              />
 
               {/* Scratch Area */}
               <div className="relative w-full h-36 bg-matte-black border border-gray-700 flex items-center justify-center overflow-hidden">
                 {/* The Secret Revealed Content */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center p-2 opacity-100">
-                  <span className="text-[10px] text-metallic-gold uppercase tracking-widest mb-1">Your Unique Code</span>
+                  <span className="text-[10px] text-metallic-gold uppercase tracking-widest mb-1">{t("scratchCard.uniqueCode")}</span>
                   <span className="text-3xl font-mono font-bold text-white tracking-widest">{discountCode || "MW-XXXX"}</span>
-                  <span className="text-[10px] text-gray-400 mt-2 px-4 leading-tight">
-                    Contact us within <strong className="text-white">{discountLevel === "10" ? "2" : "4"} hours</strong> to freeze this code. Once frozen, it remains valid for 7 days.
-                  </span>
+                  <span 
+                    className="text-[10px] text-gray-400 mt-2 px-4 leading-tight"
+                    dangerouslySetInnerHTML={{ 
+                      __html: discountLevel === "10" 
+                        ? t("scratchCard.hoursText2") 
+                        : t("scratchCard.hoursText4") 
+                    }}
+                  />
                 </div>
 
                 {/* The Scratchable Canvas */}
@@ -240,7 +253,7 @@ export default function ScratchCardPopup() {
                   className="mt-6 w-full flex flex-col gap-3"
                 >
                   <a 
-                    href={`https://wa.me/17542673047?text=Hi!%20I%20want%20to%20freeze%20my%20Golden%20Ticket%20discount%20code:%20${discountCode}`}
+                    href={getWhatsAppLink()}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => {
@@ -249,7 +262,7 @@ export default function ScratchCardPopup() {
                     }}
                     className="w-full px-6 py-3 bg-[#25D366] text-white font-bold uppercase tracking-widest text-xs hover:bg-[#128C7E] transition-colors shadow-[0_0_15px_rgba(37,211,102,0.3)] flex items-center justify-center gap-2"
                   >
-                    Freeze via WhatsApp
+                    {t("scratchCard.whatsappBtn")}
                   </a>
                   
                   <button
@@ -259,7 +272,7 @@ export default function ScratchCardPopup() {
                     }}
                     className="w-full px-6 py-3 bg-charcoal border border-metallic-gold text-metallic-gold font-bold uppercase tracking-widest text-xs hover:bg-metallic-gold hover:text-matte-black transition-colors"
                   >
-                    Freeze via Email Form
+                    {t("scratchCard.emailBtn")}
                   </button>
                 </motion.div>
               )}

@@ -8,6 +8,7 @@ import UrgencyBanner from '@/components/UrgencyBanner';
 import ScratchCardPopup from '@/components/ScratchCardPopup';
 import GlobalTracker from '@/components/GlobalTracker';
 import SocialProofPopup from '@/components/SocialProofPopup';
+import { LanguageProvider } from '@/lib/LanguageContext';
 import "./globals.css";
 
 const outfit = Outfit({
@@ -45,12 +46,14 @@ export default function RootLayout({
       className={`${outfit.variable} ${geistMono.variable} h-full antialiased dark`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground overflow-x-hidden">
-        <GlobalTracker />
-        <UrgencyBanner />
-        {children}
-        <ScratchCardPopup />
-        <SocialProofPopup />
-        <WhatsAppButton />
+        <LanguageProvider>
+          <GlobalTracker />
+          <UrgencyBanner />
+          {children}
+          <ScratchCardPopup />
+          <SocialProofPopup />
+          <WhatsAppButton />
+        </LanguageProvider>
 
         {/* Google Analytics (Tag Manager) */}
         {process.env.NEXT_PUBLIC_GOOGLE_ID && process.env.NEXT_PUBLIC_GOOGLE_ID !== 'TU_ID_AQUI' && (
