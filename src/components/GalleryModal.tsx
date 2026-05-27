@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X, LayoutGrid, Palette } from "lucide-react";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Configurator from "./Configurator";
 
 // Map service IDs to their respective image collections
@@ -161,10 +162,17 @@ export default function GalleryModal({ isOpen, onClose, serviceId }: GalleryModa
                         index % 5 === 0 ? "md:col-span-2 md:row-span-2" : ""
                       }`}
                     >
-                      <div 
-                        className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                        style={{ backgroundImage: `url('${src}')` }}
-                      />
+                      <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-105">
+                        <Image
+                          src={src}
+                          alt={`${activeGallery?.title || 'Gallery'} ${index + 1}`}
+                          fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          className="object-cover"
+                          loading="lazy"
+                          quality={75}
+                        />
+                      </div>
                       {/* Subtle overlay to enhance contrast */}
                       <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500" />
                     </motion.div>
