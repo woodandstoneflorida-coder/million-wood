@@ -19,34 +19,34 @@ const translations = {
       whyUs: "Why Us",
     },
     hero: {
-      sub: "Precision • Quality • Mastery",
+      sub: "Precision • Quality • Mastery | South Florida Custom Millwork",
       title1: "Elevating Spaces with",
       title2: "Master Carpentry",
-      description: "High-end carpentry and advanced CNC fabrication tailored to create luxurious, custom environments with absolute precision.",
+      description: "High-end carpentry, custom closets, premium kitchen cabinets, and advanced CNC fabrication services in Miami, Hollywood, and Fort Lauderdale.",
       ctaPrimary: "Start a Project",
       ctaSecondary: "Explore Services",
       scroll: "Scroll",
     },
     services: {
-      title1: "Uncompromising",
-      title2: "Craftsmanship",
-      description: "Every piece is meticulously crafted to perfection. We blend traditional woodworking mastery with advanced technological precision.",
+      title1: "High-Precision",
+      title2: "Woodworking",
+      description: "Every custom closet, cabinet, and panel combines the artistry of master carpentry with the flawless accuracy of advanced CNC routing technology.",
       clickGallery: "Click to View Gallery →",
       kitchens: {
-        title: "Kitchen Cabinets",
-        desc: "Bespoke kitchen cabinetry combining flawless aesthetics with intelligent storage solutions.",
+        title: "Custom Kitchen Cabinets",
+        desc: "Bespoke high-end kitchen cabinetry and custom carpentry, combining flawless aesthetics with intelligent storage solutions.",
       },
       closets: {
-        title: "Custom Closets",
-        desc: "Luxurious, tailor-made closets engineered for perfect organization and premium finish.",
+        title: "Custom Closets Miami",
+        desc: "Luxurious, tailor-made walk-in closets and modern storage systems engineered for perfect organization and premium finish.",
       },
       cnc: {
-        title: "CNC Services",
-        desc: "High-precision cutting, routing, and drilling using state-of-the-art industrial machinery.",
+        title: "CNC Services & Routing",
+        desc: "High-precision CNC cutting, custom routing, and drilling for architectural wood projects using state-of-the-art industrial machinery.",
       },
       panels: {
-        title: "Wall Panels",
-        desc: "Architectural wall panels with intricate geometric patterns or seamless, elegant finishes.",
+        title: "Architectural Wall Panels",
+        desc: "Custom architectural wall panels, geometric accent walls, and elegant decorative wood paneling with seamless finishes.",
       },
     },
     process: {
@@ -86,10 +86,11 @@ const translations = {
       description: "A selection of our finest completed projects, showcasing the intersection of master carpentry and modern design.",
       cta: "Start Your Own Project",
       items: {
+        closet1: "Luxury Walk-In Closet",
         kitchen: "Modern Custom Kitchen",
         cabinets: "Luxury Wood Cabinetry",
         wallPanel3: "Elegant Custom Wall Panel",
-        design: "High-End Design",
+        closet2: "Bespoke Modern Wardrobe",
         wallPanel1: "Geometric Architectural Panel",
         carpentry: "Custom Carpentry"
       }
@@ -172,34 +173,34 @@ const translations = {
       whyUs: "Nosotros",
     },
     hero: {
-      sub: "Precisión • Calidad • Maestría",
+      sub: "Precisión • Calidad • Maestría | Carpintería a Medida en Miami",
       title1: "Elevando Espacios con",
       title2: "Carpintería de Autor",
-      description: "Carpintería de alta gama y fabricación CNC avanzada diseñadas a la medida para crear entornos lujosos con absoluta precisión.",
+      description: "Carpintería de alta gama, fábrica de clósets a la medida, gabinetes de cocina de lujo y servicios de mecanizado CNC de precisión en el sur de la Florida.",
       ctaPrimary: "Iniciar Proyecto",
       ctaSecondary: "Explorar Servicios",
       scroll: "Deslizar",
     },
     services: {
-      title1: "Artesanía Sin",
-      title2: "Concesiones",
-      description: "Cada pieza es meticulosamente elaborada hasta la perfección. Fusionamos la maestría de la carpintería tradicional con la precisión tecnológica avanzada.",
+      title1: "Carpintería de",
+      title2: "Alta Precisión",
+      description: "Cada clóset, gabinete y panel decorativo combina la maestría de la carpintería fina con la precisión de la ingeniería y tecnología CNC avanzada.",
       clickGallery: "Clic para Ver Galería →",
       kitchens: {
-        title: "Gabinetes de Cocina",
-        desc: "Gabinetes a la medida que combinan una estética impecable con soluciones de almacenamiento inteligentes.",
+        title: "Gabinetes & Instalación de Cocinas",
+        desc: "Diseño e instalación de gabinetes de cocina a la medida que combinan estética impecable con soluciones de almacenamiento inteligentes.",
       },
       closets: {
-        title: "Clósets a la Medida",
-        desc: "Clósets lujosos y diseñados a medida, construidos para una organización perfecta y acabados premium.",
+        title: "Fábrica de Clósets a la Medida",
+        desc: "Clósets lujosos, vestidores y walk-in closets diseñados a medida, construidos para organización perfecta y acabados de lujo.",
       },
       cnc: {
-        title: "Servicios de CNC",
-        desc: "Corte, ruteado y perforación de alta precisión utilizando maquinaria industrial de última generación.",
+        title: "Mecanizado & Ruteado CNC",
+        desc: "Servicios de corte, perforación y ruteado CNC de alta precisión en madera y MDF utilizando maquinaria industrial de última generación.",
       },
       panels: {
-        title: "Paneles de Pared",
-        desc: "Paneles arquitectónicos de pared con patrones geométricos intrincados o acabados elegantes y uniformes.",
+        title: "Paneles de Pared Decorativos",
+        desc: "Paneles arquitectónicos de madera para pared, revestimientos decorativos con patrones geométricos o acabados elegantes.",
       },
     },
     process: {
@@ -239,10 +240,11 @@ const translations = {
       description: "Una selección de nuestros mejores proyectos completados, que muestran la intersección entre la carpintería de autor y el diseño moderno.",
       cta: "Comienza Tu Propio Proyecto",
       items: {
+        closet1: "Vestidor de Lujo a la Medida",
         kitchen: "Cocina Moderna a la Medida",
         cabinets: "Gabinetes de Madera de Lujo",
         wallPanel3: "Panel de Pared Elegante y Personalizado",
-        design: "Diseño de Alta Gama",
+        closet2: "Clóset Moderno de Autor",
         wallPanel1: "Panel Arquitectónico Geométrico",
         carpentry: "Carpintería Fina Personalizada"
       }

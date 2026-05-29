@@ -83,11 +83,11 @@ export default function Services() {
                   }}
                   className="group relative bg-deep-charcoal border border-charcoal p-10 overflow-hidden min-h-[320px] transition-all duration-500 hover:border-metallic-gold/50 cursor-pointer"
                 >
-                  {/* Background Image that appears on hover */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-40 transition-all duration-700 scale-105 group-hover:scale-100">
+                  {/* Background Image visible by default for rich visual layout (essential on mobile) */}
+                  <div className="absolute inset-0 opacity-20 group-hover:opacity-50 transition-all duration-700 scale-100 group-hover:scale-105">
                     <Image 
                       src={service.image} 
-                      alt={title} 
+                      alt={`${title} - Premium Custom Woodworking by Million Wood in Miami & Hollywood FL`} 
                       fill 
                       className="object-cover" 
                       loading="lazy" 
@@ -95,7 +95,8 @@ export default function Services() {
                       sizes="(max-width: 768px) 100vw, 50vw"
                     />
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-matte-black via-matte-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                  {/* Static elegant overlay gradient for perfect text contrast, getting richer on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/35 opacity-90 group-hover:opacity-85 transition-opacity duration-500" />
                   
                   <div className="relative z-10 flex flex-col h-full justify-between">
                     <div>

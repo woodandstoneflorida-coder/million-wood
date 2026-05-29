@@ -7,12 +7,12 @@ import { useLanguage } from "@/lib/LanguageContext";
 
 // We select a mix of the uploaded images to show in the gallery
 const portfolioItems = [
+  { src: "/services/closets/closet (1).png", altKey: "portfolio.items.closet1" },
   { src: "/services/cocinas/cocina.1.jpg", altKey: "portfolio.items.kitchen" },
-  { src: "/services/cocinas/cocina.3.jpg", altKey: "portfolio.items.cabinets" },
   { src: "/services/paneles/seccion servicios wall panel/wall panel 3.jpg", altKey: "portfolio.items.wallPanel3" },
-  { src: "/services/cocinas/cocina.5.jpg", altKey: "portfolio.items.design" },
+  { src: "/services/closets/closet.3.jpg", altKey: "portfolio.items.closet2" },
   { src: "/services/paneles/seccion servicios wall panel/wall panel1.jpg", altKey: "portfolio.items.wallPanel1" },
-  { src: "/services/cocinas/cocina.8.jpg", altKey: "portfolio.items.carpentry" },
+  { src: "/services/cocinas/cocina.3.jpg", altKey: "portfolio.items.cabinets" },
 ];
 
 export default function Portfolio() {

@@ -14,7 +14,7 @@ export default function Hero() {
       <div className="absolute inset-0 z-0">
         <Image 
           src="/hero/cocina-moderna.png"
-          alt="Luxury Modern Kitchen Custom Carpentry"
+          alt="Luxury Modern Kitchen Custom Carpentry and Custom Cabinet Installation by Million Wood in Miami, Hollywood & Fort Lauderdale"
           fill
           priority
           quality={85}

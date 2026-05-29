@@ -31,7 +31,7 @@ export default function Process() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 pointer-events-none opacity-[0.03]">
         <Image 
           src="/logos/solo logo blanco.png" 
-          alt="Million Wood Watermark" 
+          alt="Million Wood - Custom Carpentry & CNC Fabrication Shop in Miami & South Florida" 
           width={800} 
           height={800} 
           className="w-full max-w-[800px] h-auto object-contain"
