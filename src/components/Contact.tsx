@@ -136,6 +136,18 @@ export default function Contact() {
                   </p>
                 </div>
               </a>
+
+              <a href="https://maps.google.com/?q=5161+NW+79TH+AVE+%231037+UNIT+5+DORAL+FL+33166" target="_blank" rel="noopener noreferrer" onClick={() => trackMetaEvent('FindLocation', {}, true)} className="flex items-center gap-4 group cursor-pointer hover:opacity-80 transition-opacity">
+                <div className="w-12 h-12 flex items-center justify-center bg-deep-charcoal border border-charcoal group-hover:border-metallic-gold transition-colors duration-300">
+                  <MapPin className="w-5 h-5 text-metallic-gold" />
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500 uppercase tracking-wider mb-1">
+                    {language === "es" ? "Dirección Registrada" : "Registered Address"}
+                  </p>
+                  <p className="text-white font-medium group-hover:text-metallic-gold transition-colors">5161 NW 79TH AVE #1037 UNIT 5, DORAL FL 33166</p>
+                </div>
+              </a>
             </div>
           </motion.div>
 

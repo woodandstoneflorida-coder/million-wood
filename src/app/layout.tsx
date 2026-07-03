@@ -78,19 +78,36 @@ export default function RootLayout({
               "telephone": "+1-754-267-3047",
               "priceRange": "$$$",
               "description": "Million Wood provides custom millwork, luxury walk-in closets, bespoke kitchen cabinets, and precise industrial CNC fabrication services in Miami, Hollywood, Doral & Fort Lauderdale. / Million Wood ofrece carpintería de autor, clósets de diseño, gabinetes de cocina de lujo y corte CNC en el sur de la Florida.",
-              "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "7321 NW 61ST STREET",
-                "addressLocality": "Miami",
-                "addressRegion": "FL",
-                "postalCode": "33166",
-                "addressCountry": "US"
-              },
-              "geo": {
-                "@type": "GeoCoordinates",
-                "latitude": 25.8302,
-                "longitude": -80.3156
-              },
+              "address": [
+                {
+                  "@type": "PostalAddress",
+                  "streetAddress": "7321 NW 61ST STREET",
+                  "addressLocality": "Miami",
+                  "addressRegion": "FL",
+                  "postalCode": "33166",
+                  "addressCountry": "US"
+                },
+                {
+                  "@type": "PostalAddress",
+                  "streetAddress": "5161 NW 79TH AVE #1037 UNIT 5",
+                  "addressLocality": "Doral",
+                  "addressRegion": "FL",
+                  "postalCode": "33166",
+                  "addressCountry": "US"
+                }
+              ],
+              "geo": [
+                {
+                  "@type": "GeoCoordinates",
+                  "latitude": 25.8302,
+                  "longitude": -80.3156
+                },
+                {
+                  "@type": "GeoCoordinates",
+                  "latitude": 25.8201,
+                  "longitude": -80.3225
+                }
+              ],
               "areaServed": [
                 {
                   "@type": "AdministrativeArea",
