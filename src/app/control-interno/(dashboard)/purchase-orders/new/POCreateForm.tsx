@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useTransition } from 'react';
+import React, { useState, useTransition, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { PurchaseOrderItem, PurchaseOrder } from '@/lib/db';
 import { createPOAction, updatePOAction } from '@/app/actions/purchase-orders';
