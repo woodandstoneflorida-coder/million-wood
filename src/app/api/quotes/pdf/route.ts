@@ -300,8 +300,15 @@ export async function GET(req: Request) {
         'Content-Type': 'text/html; charset=utf-8',
       },
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error generating PDF view for quote:', error);
-    return new Response('Internal Server Error', { status: 500 });
+    return new Response(JSON.stringify({ 
+      error: 'Internal Server Error', 
+      message: error.message, 
+      stack: error.stack 
+    }), { 
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
 }
