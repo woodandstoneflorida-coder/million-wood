@@ -616,7 +616,10 @@ export const db = {
         FROM mw_invoices 
         ORDER BY date DESC, created_at DESC
       `;
-      return rows;
+      return rows.map((row: any) => ({
+        ...row,
+        items: typeof row.items === 'string' ? JSON.parse(row.items) : row.items
+      })) as Invoice[];
     }
     const data = await getLocalData();
     return [...data.invoices].sort((a, b) => b.date.localeCompare(a.date));
@@ -782,7 +785,10 @@ export const db = {
         FROM mw_quotes 
         ORDER BY date DESC, created_at DESC
       `;
-      return rows;
+      return rows.map((row: any) => ({
+        ...row,
+        items: typeof row.items === 'string' ? JSON.parse(row.items) : row.items
+      })) as Quote[];
     }
     const data = await getLocalData();
     return [...data.quotes].sort((a, b) => b.date.localeCompare(a.date));
@@ -927,7 +933,10 @@ export const db = {
         FROM mw_purchase_orders 
         ORDER BY date DESC, created_at DESC
       `;
-      return rows;
+      return rows.map((row: any) => ({
+        ...row,
+        items: typeof row.items === 'string' ? JSON.parse(row.items) : row.items
+      })) as PurchaseOrder[];
     }
     const data = await getLocalData();
     return [...data.purchaseOrders].sort((a, b) => b.date.localeCompare(a.date));
