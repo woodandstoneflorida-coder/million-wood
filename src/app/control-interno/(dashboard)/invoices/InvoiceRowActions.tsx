@@ -8,9 +8,10 @@ import { Check, X, FileDown, Loader2, Trash2 } from 'lucide-react';
 interface InvoiceRowActionsProps {
   invoiceId: string;
   status: 'pending' | 'paid' | 'cancelled';
+  invoiceNumber?: string;
 }
 
-export default function InvoiceRowActions({ invoiceId, status }: InvoiceRowActionsProps) {
+export default function InvoiceRowActions({ invoiceId, status, invoiceNumber }: InvoiceRowActionsProps) {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
