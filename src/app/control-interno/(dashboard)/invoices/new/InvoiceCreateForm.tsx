@@ -45,12 +45,17 @@ export default function InvoiceCreateForm({ clients, initialInvoice, nextInvoice
   const [projectTitle, setProjectTitle] = useState(initialInvoice?.notes?.split('Proyecto: ')[1]?.split('\n')[0] || '');
 
   // Dates
-  const [date, setDate] = useState(initialInvoice?.date || new Date().toISOString().split('T')[0]);
-  const [dueDate, setDueDate] = useState(initialInvoice?.dueDate || (() => {
-    const d = new Date();
-    d.setDate(d.getDate() + 15);
-    return d.toISOString().split('T')[0];
-  })());
+  const [date, setDate] = useState(initialInvoice?.date || '');
+  const [dueDate, setDueDate] = useState(initialInvoice?.dueDate || '');
+
+  useEffect(() => {
+    if (!initialInvoice) {
+      const d = new Date();
+      setDate(d.toISOString().split('T')[0]);
+      d.setDate(d.getDate() + 15);
+      setDueDate(d.toISOString().split('T')[0]);
+    }
+  }, [initialInvoice]);
 
   const [status, setStatus] = useState<'pending' | 'paid' | 'cancelled'>(initialInvoice?.status || 'pending');
   const [notes, setNotes] = useState(() => {

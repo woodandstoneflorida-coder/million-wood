@@ -17,8 +17,14 @@ export default function POCreateForm({ purchaseOrder }: POCreateFormProps) {
 
   // Form Fields
   const [vendorName, setVendorName] = useState(purchaseOrder?.vendorName || '');
-  const [date, setDate] = useState(purchaseOrder?.date || new Date().toISOString().split('T')[0]);
+  const [date, setDate] = useState(purchaseOrder?.date || '');
   const [notes, setNotes] = useState(purchaseOrder?.notes || '');
+
+  useEffect(() => {
+    if (!purchaseOrder) {
+      setDate(new Date().toISOString().split('T')[0]);
+    }
+  }, [purchaseOrder]);
 
   // Dynamic Items list
   const [items, setItems] = useState<PurchaseOrderItem[]>(

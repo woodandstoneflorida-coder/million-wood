@@ -45,13 +45,18 @@ export default function QuoteCreateForm({ clients, initialQuote, nextQuoteNumber
   const [clientEmail, setClientEmail] = useState('');
   const [projectTitle, setProjectTitle] = useState(initialQuote?.notes?.split('Proyecto: ')[1]?.split('\n')[0] || '');
 
-  // Dates
-  const [date, setDate] = useState(initialQuote?.date || new Date().toISOString().split('T')[0]);
-  const [dueDate, setDueDate] = useState(initialQuote?.dueDate || (() => {
-    const d = new Date();
-    d.setDate(d.getDate() + 30);
-    return d.toISOString().split('T')[0];
-  })());
+  // Dates - Initialize empty to avoid hydration mismatch, then set on mount
+  const [date, setDate] = useState(initialQuote?.date || '');
+  const [dueDate, setDueDate] = useState(initialQuote?.dueDate || '');
+
+  useEffect(() => {
+    if (!initialQuote) {
+      const d = new Date();
+      setDate(d.toISOString().split('T')[0]);
+      d.setDate(d.getDate() + 30);
+      setDueDate(d.toISOString().split('T')[0]);
+    }
+  }, [initialQuote]);
 
   const [status, setStatus] = useState<'pending' | 'accepted' | 'declined'>(initialQuote?.status || 'pending');
   const [notes, setNotes] = useState(() => {
