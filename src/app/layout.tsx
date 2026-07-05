@@ -1,14 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit, Geist_Mono } from "next/font/google";
-import { GoogleAnalytics } from '@next/third-parties/google';
-import Script from 'next/script';
 import { Analytics } from "@vercel/analytics/next";
-import WhatsAppButton from '@/components/WhatsAppButton';
-import UrgencyBanner from '@/components/UrgencyBanner';
-import ScratchCardPopup from '@/components/ScratchCardPopup';
-import GlobalTracker from '@/components/GlobalTracker';
-import SocialProofPopup from '@/components/SocialProofPopup';
-import { LanguageProvider } from '@/lib/LanguageContext';
 import "./globals.css";
 
 const outfit = Outfit({
@@ -77,7 +69,7 @@ export default function RootLayout({
               "url": "https://millionwoodusa.com",
               "telephone": "+1-754-267-3047",
               "priceRange": "$$$",
-              "description": "Million Wood provides custom millwork, luxury walk-in closets, bespoke kitchen cabinets, and precise industrial CNC fabrication services in Miami, Hollywood, Doral & Fort Lauderdale. / Million Wood ofrece carpintería de autor, clósets de diseño, gabinetes de cocina de lujo y corte CNC en el sur de la Florida.",
+              "description": "Million Wood provides custom millwork, luxury walk-in closets, bespoke kitchen cabinets, and precise industrial CNC fabrication services in Miami, Hollywood, Doral & Fort Lauderdale.",
               "address": [
                 {
                   "@type": "PostalAddress",
@@ -123,126 +115,17 @@ export default function RootLayout({
                 },
                 {
                   "@type": "AdministrativeArea",
-                  "name": "Hialeah"
-                },
-                {
-                  "@type": "AdministrativeArea",
                   "name": "Doral"
-                },
-                {
-                  "@type": "AdministrativeArea",
-                  "name": "Medley"
                 },
                 {
                   "@type": "AdministrativeArea",
                   "name": "South Florida"
                 }
-              ],
-              "hasOfferCatalog": {
-                "@type": "OfferCatalog",
-                "name": "Million Wood Services Catalog",
-                "itemListElement": [
-                  {
-                    "@type": "Offer",
-                    "itemOffered": {
-                      "@type": "Service",
-                      "name": "Custom Kitchen Cabinets / Gabinetes de Cocina a Medida",
-                      "description": "Bespoke high-end kitchen cabinetry and design combining flawless aesthetics with intelligent storage solutions."
-                    }
-                  },
-                  {
-                    "@type": "Offer",
-                    "itemOffered": {
-                      "@type": "Service",
-                      "name": "Custom Closets & Walk-In Closets / Clósets y Vestidores de Diseño",
-                      "description": "Luxurious, tailor-made closets engineered for perfect organization and premium finish."
-                    }
-                  },
-                  {
-                    "@type": "Offer",
-                    "itemOffered": {
-                      "@type": "Service",
-                      "name": "Industrial CNC Routing & Machining / Mecanizado y Ruteado CNC",
-                      "description": "High-precision CNC cutting, custom routing, and drilling for architectural wood projects using state-of-the-art industrial machinery."
-                    }
-                  },
-                  {
-                    "@type": "Offer",
-                    "itemOffered": {
-                      "@type": "Service",
-                      "name": "Architectural Wall Panels / Paneles de Pared Decorativos",
-                      "description": "Custom wood paneling, geometric accent walls, and elegant decorative partitions."
-                    }
-                  }
-                ]
-              },
-              "openingHoursSpecification": {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": [
-                  "Monday",
-                  "Tuesday",
-                  "Wednesday",
-                  "Thursday",
-                  "Friday",
-                  "Saturday"
-                ],
-                "opens": "08:00",
-                "closes": "18:00"
-              },
-              "sameAs": [
-                "https://www.facebook.com/MillionWoodUSA",
-                "https://www.instagram.com/millionwoodusa",
-                "https://www.tiktok.com/@millionwoodmia"
               ]
             })
           }}
         />
-
-        <LanguageProvider>
-          <GlobalTracker />
-          <UrgencyBanner />
-          {children}
-          <ScratchCardPopup />
-          <SocialProofPopup />
-          <WhatsAppButton />
-        </LanguageProvider>
-
-        {/* Google Analytics (Tag Manager) */}
-        {process.env.NEXT_PUBLIC_GOOGLE_ID && process.env.NEXT_PUBLIC_GOOGLE_ID !== 'TU_ID_AQUI' && (
-          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ID} />
-        )}
-
-        {/* Facebook Pixel */}
-        {process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID && process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID !== 'TU_ID_AQUI' && (
-          <>
-            <Script
-              id="fb-pixel"
-              strategy="afterInteractive"
-              dangerouslySetInnerHTML={{
-                __html: `
-                  !function(f,b,e,v,n,t,s)
-                  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-                  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-                  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-                  n.queue=[];t=b.createElement(e);t.async=!0;
-                  t.src=v;s=b.getElementsByTagName(e)[0];
-                  s.parentNode.insertBefore(t,s)}(window, document,'script',
-                  'https://connect.facebook.net/en_US/fbevents.js');
-                  fbq('init', '${process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID}');
-                `,
-              }}
-            />
-            <noscript>
-              <img
-                height="1"
-                width="1"
-                style={{ display: 'none' }}
-                src={`https://www.facebook.com/tr?id=${process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID}&ev=PageView&noscript=1`}
-                alt=""
-              />
-            </noscript>
-          </>
-        )}
+        {children}
         <Analytics />
       </body>
     </html>
