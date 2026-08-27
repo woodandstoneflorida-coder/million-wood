@@ -6,6 +6,9 @@ import { db, InvoiceItem } from '@/lib/db';
 export async function createInvoiceAction(data: {
   clientId: string;
   clientName: string;
+  clientAddress?: string;
+  clientPhone?: string;
+  clientEmail?: string;
   date: string;
   dueDate: string;
   items: InvoiceItem[];
@@ -20,8 +23,30 @@ export async function createInvoiceAction(data: {
   }
 
   try {
+    let finalClientId = data.clientId;
+
+    if (finalClientId === 'generic-client' || !finalClientId) {
+      // Create a new client if none exists
+      const newClient = await db.createClient({
+        name: data.clientName,
+        email: data.clientEmail || '',
+        phone: data.clientPhone || '',
+        address: data.clientAddress || '',
+        taxId: '',
+      });
+      finalClientId = newClient.id;
+    } else {
+      // Update existing client with latest details
+      await db.updateClient(finalClientId, {
+        name: data.clientName,
+        email: data.clientEmail || '',
+        phone: data.clientPhone || '',
+        address: data.clientAddress || '',
+      });
+    }
+
     const newInvoice = await db.createInvoice({
-      clientId: data.clientId,
+      clientId: finalClientId,
       clientName: data.clientName,
       date: data.date,
       dueDate: data.dueDate,
@@ -63,6 +88,9 @@ export async function updateInvoiceStatusAction(id: string, status: 'pending' | 
 export async function updateInvoiceAction(id: string, data: {
   clientId: string;
   clientName: string;
+  clientAddress?: string;
+  clientPhone?: string;
+  clientEmail?: string;
   date: string;
   dueDate: string;
   items: InvoiceItem[];
@@ -77,8 +105,30 @@ export async function updateInvoiceAction(id: string, data: {
   }
 
   try {
+    let finalClientId = data.clientId;
+
+    if (finalClientId === 'generic-client' || !finalClientId) {
+      // Create a new client if none exists
+      const newClient = await db.createClient({
+        name: data.clientName,
+        email: data.clientEmail || '',
+        phone: data.clientPhone || '',
+        address: data.clientAddress || '',
+        taxId: '',
+      });
+      finalClientId = newClient.id;
+    } else {
+      // Update existing client with latest details
+      await db.updateClient(finalClientId, {
+        name: data.clientName,
+        email: data.clientEmail || '',
+        phone: data.clientPhone || '',
+        address: data.clientAddress || '',
+      });
+    }
+
     await db.updateInvoice(id, {
-      clientId: data.clientId,
+      clientId: finalClientId,
       clientName: data.clientName,
       date: data.date,
       dueDate: data.dueDate,

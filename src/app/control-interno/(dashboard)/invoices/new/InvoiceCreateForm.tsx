@@ -151,6 +151,9 @@ export default function InvoiceCreateForm({ clients, initialInvoice, nextInvoice
         response = await updateInvoiceAction(invoiceId, {
           clientId: clientIdToSave,
           clientName,
+          clientAddress,
+          clientPhone,
+          clientEmail,
           date,
           dueDate,
           items,
@@ -164,6 +167,9 @@ export default function InvoiceCreateForm({ clients, initialInvoice, nextInvoice
         response = await createInvoiceAction({
           clientId: clientIdToSave,
           clientName,
+          clientAddress,
+          clientPhone,
+          clientEmail,
           date,
           dueDate,
           items,
@@ -221,6 +227,9 @@ export default function InvoiceCreateForm({ clients, initialInvoice, nextInvoice
       await updateInvoiceAction(invoiceId, {
         clientId: clientIdToSave,
         clientName: clientName || 'Cliente Factura',
+        clientAddress,
+        clientPhone,
+        clientEmail,
         date,
         dueDate,
         items,
@@ -236,6 +245,9 @@ export default function InvoiceCreateForm({ clients, initialInvoice, nextInvoice
     const response = await createInvoiceAction({
       clientId: clientIdToSave,
       clientName: clientName || 'Cliente Factura',
+      clientAddress,
+      clientPhone,
+      clientEmail,
       date,
       dueDate,
       items,
