@@ -296,6 +296,9 @@ export default function QuoteCreateForm({ clients, initialQuote, nextQuoteNumber
       await updateQuoteAction(quoteId, {
         clientId: clientIdToSave,
         clientName: clientName || 'Cliente Cotización',
+        clientAddress,
+        clientPhone,
+        clientEmail,
         date,
         dueDate,
         items,
@@ -312,6 +315,9 @@ export default function QuoteCreateForm({ clients, initialQuote, nextQuoteNumber
     const response = await createQuoteAction({
       clientId: clientIdToSave,
       clientName: clientName || 'Cliente Cotización',
+      clientAddress,
+      clientPhone,
+      clientEmail,
       date,
       dueDate,
       items,

@@ -6,6 +6,9 @@ import { db, QuoteItem } from '@/lib/db';
 export async function createQuoteAction(data: {
   clientId: string;
   clientName: string;
+  clientAddress?: string;
+  clientPhone?: string;
+  clientEmail?: string;
   date: string;
   dueDate: string;
   items: QuoteItem[];
@@ -21,8 +24,30 @@ export async function createQuoteAction(data: {
   }
 
   try {
+    let finalClientId = data.clientId;
+
+    if (finalClientId === 'generic-client' || !finalClientId) {
+      // Create a new client if none exists
+      const newClient = await db.createClient({
+        name: data.clientName,
+        email: data.clientEmail || '',
+        phone: data.clientPhone || '',
+        address: data.clientAddress || '',
+        taxId: '',
+      });
+      finalClientId = newClient.id;
+    } else {
+      // Update existing client with latest details
+      await db.updateClient(finalClientId, {
+        name: data.clientName,
+        email: data.clientEmail || '',
+        phone: data.clientPhone || '',
+        address: data.clientAddress || '',
+      });
+    }
+
     const newQuote = await db.createQuote({
-      clientId: data.clientId,
+      clientId: finalClientId,
       clientName: data.clientName,
       date: data.date,
       dueDate: data.dueDate,
@@ -75,6 +100,9 @@ export async function convertQuoteToInvoiceAction(quoteId: string) {
 export async function updateQuoteAction(id: string, data: {
   clientId: string;
   clientName: string;
+  clientAddress?: string;
+  clientPhone?: string;
+  clientEmail?: string;
   date: string;
   dueDate: string;
   items: QuoteItem[];
@@ -90,8 +118,30 @@ export async function updateQuoteAction(id: string, data: {
   }
 
   try {
+    let finalClientId = data.clientId;
+
+    if (finalClientId === 'generic-client' || !finalClientId) {
+      // Create a new client if none exists
+      const newClient = await db.createClient({
+        name: data.clientName,
+        email: data.clientEmail || '',
+        phone: data.clientPhone || '',
+        address: data.clientAddress || '',
+        taxId: '',
+      });
+      finalClientId = newClient.id;
+    } else {
+      // Update existing client with latest details
+      await db.updateClient(finalClientId, {
+        name: data.clientName,
+        email: data.clientEmail || '',
+        phone: data.clientPhone || '',
+        address: data.clientAddress || '',
+      });
+    }
+
     await db.updateQuote(id, {
-      clientId: data.clientId,
+      clientId: finalClientId,
       clientName: data.clientName,
       date: data.date,
       dueDate: data.dueDate,
