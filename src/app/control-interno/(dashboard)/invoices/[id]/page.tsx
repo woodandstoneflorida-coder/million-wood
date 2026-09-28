@@ -8,6 +8,8 @@ interface PageProps {
   params: Promise<{ id: string }>;
 }
 
+export const dynamic = 'force-dynamic';
+
 export default async function ViewInvoicePage({ params }: PageProps) {
   const resolvedParams = await params;
   const id = resolvedParams.id;

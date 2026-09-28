@@ -48,6 +48,7 @@ export default function QuoteCreateForm({ clients, initialQuote, nextQuoteNumber
   // Dates - Initialize empty to avoid hydration mismatch, then set on mount
   const [date, setDate] = useState(initialQuote?.date || '');
   const [dueDate, setDueDate] = useState(initialQuote?.dueDate || '');
+  const [includeSignature, setIncludeSignature] = useState(false);
 
   useEffect(() => {
     if (!initialQuote) {
@@ -337,7 +338,7 @@ export default function QuoteCreateForm({ clients, initialQuote, nextQuoteNumber
     const newWindow = window.open('about:blank', '_blank');
     const id = await ensureSaved();
     if (id && newWindow) {
-      newWindow.location.href = `/api/quotes/pdf?id=${id}`;
+      newWindow.location.href = `/api/quotes/pdf?id=${id}&signature=${includeSignature}`;
     } else if (newWindow) {
       newWindow.close();
     }
@@ -347,7 +348,7 @@ export default function QuoteCreateForm({ clients, initialQuote, nextQuoteNumber
     const newWindow = window.open('about:blank', '_blank');
     const id = await ensureSaved();
     if (id && newWindow) {
-      newWindow.location.href = `/api/quotes/pdf?id=${id}`;
+      newWindow.location.href = `/api/quotes/pdf?id=${id}&signature=${includeSignature}`;
     } else if (newWindow) {
       newWindow.close();
     }
@@ -357,14 +358,14 @@ export default function QuoteCreateForm({ clients, initialQuote, nextQuoteNumber
     const id = await ensureSaved();
     if (!id) return;
     const subject = encodeURIComponent(`Cotización ${quoteNumber} - Million Wood`);
-    const body = encodeURIComponent(`Hola ${clientName},\n\nTe comparto el presupuesto estimado ${quoteNumber} de Million Wood por un total de ${formatCurrency(total)}.\n\nPuedes verlo en el siguiente enlace:\n${window.location.origin}/api/quotes/pdf?id=${id}\n\nAtentamente,\nMillion Wood USA`);
+    const body = encodeURIComponent(`Hola ${clientName},\n\nTe comparto el presupuesto estimado ${quoteNumber} de Million Wood por un total de ${formatCurrency(total)}.\n\nPuedes verlo en el siguiente enlace:\n${window.location.origin}/api/quotes/pdf?id=${id}&signature=${includeSignature}\n\nAtentamente,\nMillion Wood USA`);
     window.open(`mailto:${clientEmail || ''}?subject=${subject}&body=${body}`, '_blank');
   };
 
   const handleSendWhatsApp = async () => {
     const id = await ensureSaved();
     if (!id) return;
-    const msg = `Hola *${clientName}*, te comparto la cotización *${quoteNumber}* de *Million Wood* por un total de *${formatCurrency(total)}*. Puedes verla en el siguiente enlace: ${window.location.origin}/api/quotes/pdf?id=${id}`;
+    const msg = `Hola *${clientName}*, te comparto la cotización *${quoteNumber}* de *Million Wood* por un total de *${formatCurrency(total)}*. Puedes verla en el siguiente enlace: ${window.location.origin}/api/quotes/pdf?id=${id}&signature=${includeSignature}`;
     const encoded = encodeURIComponent(msg);
     window.open(`https://wa.me/${clientPhone ? clientPhone.replace(/\D/g, '') : ''}?text=${encoded}`, '_blank');
   };
@@ -619,7 +620,7 @@ export default function QuoteCreateForm({ clients, initialQuote, nextQuoteNumber
               placeholder="Notas del presupuesto, condiciones del taller..."
             />
             <div className="pt-2">
-              <label className="flex items-center space-x-2 text-xs text-foreground cursor-pointer">
+              <label className="flex items-center space-x-2 text-xs text-foreground cursor-pointer mb-2">
                 <input
                   type="checkbox"
                   checked={isOptionsList}
@@ -627,6 +628,15 @@ export default function QuoteCreateForm({ clients, initialQuote, nextQuoteNumber
                   className="rounded border-charcoal bg-matte-black text-metallic-gold focus:ring-metallic-gold/50 cursor-pointer h-4 w-4"
                 />
                 <span>Cotización de opciones (Lista de Precios, no sumar total)</span>
+              </label>
+              <label className="flex items-center space-x-2 text-xs text-foreground cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={includeSignature}
+                  onChange={(e) => setIncludeSignature(e.target.checked)}
+                  className="rounded border-charcoal bg-matte-black text-metallic-gold focus:ring-metallic-gold/50 cursor-pointer h-4 w-4"
+                />
+                <span>Incluir espacio para firma en el PDF</span>
               </label>
             </div>
           </div>
@@ -697,18 +707,20 @@ export default function QuoteCreateForm({ clients, initialQuote, nextQuoteNumber
         </div>
 
         {/* Signature lines */}
-        <div className="grid grid-cols-2 gap-12 mt-16 pt-8 border-t border-charcoal/30">
-          <div className="text-center">
-            <div className="h-10 flex items-end justify-center border-b border-charcoal text-sm text-foreground font-serif tracking-wider">
-              Julian Moya
+        {includeSignature && (
+          <div className="grid grid-cols-2 gap-12 mt-16 pt-8 border-t border-charcoal/30">
+            <div className="text-center">
+              <div className="h-10 flex items-end justify-center border-b border-charcoal text-sm text-foreground font-serif tracking-wider">
+                Julian Moya
+              </div>
+              <p className="text-[10px] uppercase font-bold text-light-gray/40 mt-2">Manager</p>
             </div>
-            <p className="text-[10px] uppercase font-bold text-light-gray/40 mt-2">Manager</p>
+            <div className="text-center">
+              <div className="h-10 border-b border-charcoal"></div>
+              <p className="text-[10px] uppercase font-bold text-light-gray/40 mt-2">Customer Signature</p>
+            </div>
           </div>
-          <div className="text-center">
-            <div className="h-10 border-b border-charcoal"></div>
-            <p className="text-[10px] uppercase font-bold text-light-gray/40 mt-2">Customer Signature</p>
-          </div>
-        </div>
+        )}
       </form>
 
       {/* FLOATING ACTION TOOLBAR DOCK */}

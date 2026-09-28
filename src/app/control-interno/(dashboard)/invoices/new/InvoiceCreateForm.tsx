@@ -47,6 +47,7 @@ export default function InvoiceCreateForm({ clients, initialInvoice, nextInvoice
   // Dates
   const [date, setDate] = useState(initialInvoice?.date || '');
   const [dueDate, setDueDate] = useState(initialInvoice?.dueDate || '');
+  const [includeSignature, setIncludeSignature] = useState(true);
 
   useEffect(() => {
     if (!initialInvoice) {
@@ -273,7 +274,7 @@ export default function InvoiceCreateForm({ clients, initialInvoice, nextInvoice
     const newWindow = window.open('about:blank', '_blank');
     const id = await ensureSaved();
     if (id && newWindow) {
-      newWindow.location.href = `/api/invoices/pdf?id=${id}`;
+      newWindow.location.href = `/api/invoices/pdf?id=${id}&signature=${includeSignature}`;
     } else if (newWindow) {
       newWindow.close();
     }
@@ -283,7 +284,7 @@ export default function InvoiceCreateForm({ clients, initialInvoice, nextInvoice
     const newWindow = window.open('about:blank', '_blank');
     const id = await ensureSaved();
     if (id && newWindow) {
-      newWindow.location.href = `/api/invoices/pdf?id=${id}`;
+      newWindow.location.href = `/api/invoices/pdf?id=${id}&signature=${includeSignature}`;
     } else if (newWindow) {
       newWindow.close();
     }
@@ -293,16 +294,15 @@ export default function InvoiceCreateForm({ clients, initialInvoice, nextInvoice
     const id = await ensureSaved();
     if (!id) return;
     const subject = encodeURIComponent(`Factura ${invoiceNumber} - Million Wood`);
-    const body = encodeURIComponent(`Hola ${clientName},\n\nTe comparto la factura ${invoiceNumber} de Million Wood por un total de ${formatCurrency(total)}.\n\nPuedes verla e imprimirla en el siguiente enlace:\n${window.location.origin}/api/invoices/pdf?id=${id}\n\nAtentamente,\nMillion Wood USA`);
+    const body = encodeURIComponent(`Hola ${clientName},\n\nTe comparto la factura ${invoiceNumber} de Million Wood por un total de ${formatCurrency(total)}.\n\nPuedes verla e imprimirla en el siguiente enlace:\n${window.location.origin}/api/invoices/pdf?id=${id}&signature=${includeSignature}\n\nAtentamente,\nMillion Wood USA`);
     window.open(`mailto:${clientEmail || ''}?subject=${subject}&body=${body}`, '_blank');
   };
 
   const handleSendWhatsApp = async () => {
     const id = await ensureSaved();
     if (!id) return;
-    const msg = `Hola *${clientName}*, te comparto la factura *${invoiceNumber}* de *Million Wood* por un total de *${formatCurrency(total)}*. Puedes verla en el siguiente enlace: ${window.location.origin}/api/invoices/pdf?id=${id}`;
-    const encoded = encodeURIComponent(msg);
-    window.open(`https://wa.me/${clientPhone ? clientPhone.replace(/\D/g, '') : ''}?text=${encoded}`, '_blank');
+    const text = encodeURIComponent(`Hola ${clientName},\n\nTe comparto la factura ${invoiceNumber} por ${formatCurrency(total)}.\nEnlace: ${window.location.origin}/api/invoices/pdf?id=${id}&signature=${includeSignature}\n\nMillion Wood USA`);
+    window.open(`https://wa.me/${clientPhone?.replace(/\D/g, '') || ''}?text=${text}`, '_blank');
   };
 
   const formatCurrency = (value: number) => {
@@ -554,6 +554,17 @@ export default function InvoiceCreateForm({ clients, initialInvoice, nextInvoice
               className="w-full rounded-xl border border-charcoal bg-matte-black/25 px-3.5 py-2.5 text-xs text-foreground outline-none resize-none"
               placeholder="Términos comerciales, información bancaria, plazos de entrega..."
             />
+            <div className="pt-3 flex items-center">
+              <label className="flex items-center space-x-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={includeSignature}
+                  onChange={(e) => setIncludeSignature(e.target.checked)}
+                  className="rounded border-charcoal bg-matte-black text-metallic-gold focus:ring-metallic-gold h-4 w-4"
+                />
+                <span className="text-xs font-semibold text-light-gray/80">Incluir espacio para firma en el PDF</span>
+              </label>
+            </div>
           </div>
 
           <div className="rounded-xl border border-charcoal bg-matte-black/15 p-5 space-y-3.5 self-start">
@@ -622,18 +633,20 @@ export default function InvoiceCreateForm({ clients, initialInvoice, nextInvoice
         </div>
 
         {/* Signature lines */}
-        <div className="grid grid-cols-2 gap-12 mt-16 pt-8 border-t border-charcoal/30">
-          <div className="text-center">
-            <div className="h-10 flex items-end justify-center border-b border-charcoal text-sm text-foreground font-serif tracking-wider">
-              Julian Moya
+        {includeSignature && (
+          <div className="grid grid-cols-2 gap-12 mt-16 pt-8 border-t border-charcoal/30">
+            <div className="text-center">
+              <div className="h-10 flex items-end justify-center border-b border-charcoal text-sm text-foreground font-serif tracking-wider">
+                Julian Moya
+              </div>
+              <p className="text-[10px] uppercase font-bold text-light-gray/40 mt-2">Manager</p>
             </div>
-            <p className="text-[10px] uppercase font-bold text-light-gray/40 mt-2">Manager</p>
+            <div className="text-center">
+              <div className="h-10 border-b border-charcoal"></div>
+              <p className="text-[10px] uppercase font-bold text-light-gray/40 mt-2">Customer Signature</p>
+            </div>
           </div>
-          <div className="text-center">
-            <div className="h-10 border-b border-charcoal"></div>
-            <p className="text-[10px] uppercase font-bold text-light-gray/40 mt-2">Customer Signature</p>
-          </div>
-        </div>
+        )}
       </form>
 
       {/* FLOATING ACTION TOOLBAR DOCK AT THE BOTTOM */}

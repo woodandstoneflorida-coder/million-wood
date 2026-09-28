@@ -4,6 +4,8 @@ import { db } from '@/lib/db';
 import QuoteCreateForm from './QuoteCreateForm';
 import { ArrowLeft, UserPlus } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 export default async function NewQuotePage() {
   const clients = await db.getClients();
   const quotes = await db.getQuotes();

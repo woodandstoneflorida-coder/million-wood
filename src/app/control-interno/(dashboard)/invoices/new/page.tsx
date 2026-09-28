@@ -4,6 +4,8 @@ import { db } from '@/lib/db';
 import InvoiceCreateForm from './InvoiceCreateForm';
 import { ArrowLeft, UserPlus } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 export default async function NewInvoicePage() {
   const clients = await db.getClients();
   const invoices = await db.getInvoices();

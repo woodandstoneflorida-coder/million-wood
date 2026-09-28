@@ -1,10 +1,14 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');
+    const signatureParam = searchParams.get('signature');
+    const showSignature = signatureParam !== 'false'; // Default to true for invoices
 
     if (!id) {
       return new Response('Missing ID parameter', { status: 400 });
@@ -288,6 +292,19 @@ export async function GET(req: Request) {
         ` : ''}
       </div>
     </div>
+
+    ${showSignature ? `
+    <div class="signature-section" style="margin-top: 60px; border-top: 1px solid #ddd; padding-top: 30px; display: flex; justify-content: space-between; position: relative; z-index: 1;">
+      <div style="text-align: center; width: 40%;">
+        <div style="border-bottom: 1px solid #333; height: 40px; display: flex; align-items: flex-end; justify-content: center; font-family: serif; font-size: 16px; letter-spacing: 1px;">Julian Moya</div>
+        <p style="font-size: 10px; text-transform: uppercase; font-weight: bold; color: #777; margin-top: 8px;">Manager</p>
+      </div>
+      <div style="text-align: center; width: 40%;">
+        <div style="border-bottom: 1px solid #333; height: 40px;"></div>
+        <p style="font-size: 10px; text-transform: uppercase; font-weight: bold; color: #777; margin-top: 8px;">Customer Signature</p>
+      </div>
+    </div>
+    ` : ''}
   </div>
 
 </body>
